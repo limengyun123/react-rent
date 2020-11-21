@@ -1,17 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+// import reportWebVitals from './reportWebVitals';
+import {Provider} from 'react-redux'
+import {AppContainer} from 'react-hot-loader'
+import Route from './router'
+import store from './redux/store.js'
+import 'antd/dist/antd.min.css'
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const render = Component => {
+	ReactDOM.render(
+	<Provider store={store}>
+		<AppContainer>
+			<Component />
+		</AppContainer>
+	</Provider>,
   document.getElementById('root')
 );
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+render(Route);
+
+// reportWebVitals();
+
+if (module.hot) {
+  module.hot.accept('./router', () => { render(Route) })
+}

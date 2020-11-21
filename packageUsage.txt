@@ -1,0 +1,4 @@
+babel-eslint：
+    babel-eslint allows you to lint ALL valid Babel code with the fantastic ESLint.
+    you only need to use babel-eslint if you are using types (Flow) or experimental features not supported in ESLint itself yet. 
+    Otherwise try the default parser (you don't have to use it just because you are using Babel).

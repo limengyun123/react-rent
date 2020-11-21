@@ -1,0 +1,31 @@
+.page-title{
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 2rem;
+    border-bottom: solid 1px #dddddd;
+}
+.profile-container{
+    font-size: 1.2rem;
+
+    img{
+        width: 100px;
+        height: 120px;
+        margin: 0 20px;
+    }
+
+    .profile-information{
+        margin: 20px;
+        background-color: beige;
+        
+        input{
+            background-color: inherit;
+            border: none;
+        }
+    }
+
+    .avatar-uploader > .ant-upload {
+        width: 128px;
+        height: 128px;
+      }
+    
+}
