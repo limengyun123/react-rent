@@ -20,7 +20,6 @@ class EditProfile extends Component{
 			email: "",
 			sex: "",
 			mobie: "",
-			// avatar: "default.jpg",
 			avatar: "",
 			hasLogined: false,
 			isPasswordModelVisible: false
@@ -151,12 +150,9 @@ class EditProfile extends Component{
 		return(
 			
 			<div>
-				<div></div>
-				<Button type="primary" onClick={()=>this.testChangeLogState()}>导航栏</Button>
-				
 				{this.state.hasLogined ?
 				<div>
-					<div className='page-title'>基本信息</div>
+					{/* <div className='page-title'>基本信息</div> */}
 					<Row>
 						<Col span={3}>
 							<Menu mode="inline" defaultSelectedKeys='2'>

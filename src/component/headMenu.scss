@@ -1,0 +1,21 @@
+.head{
+    padding: 15px 30px;
+    border-bottom: solid 1px #eeeeee;
+    .head-title{
+        font-size: 2.5rem;
+    }
+    .head-menu{
+        border-bottom: none;
+        font-size: 1rem;
+        float: right;
+    }
+    .user-info{
+        padding: 0 20px;
+        // display: inline;
+        float: right;
+        img{
+            height: 40px;
+            width: 40px;
+        }
+    }
+}
