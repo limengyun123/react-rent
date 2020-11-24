@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
 import {Menu, Row,Col} from 'antd'
-import {NavLink} from 'react-router-dom'
+import {Link, NavLink} from 'react-router-dom'
 import './headMenu.scss'
 
 class HeadMenu extends Component{
@@ -39,7 +39,7 @@ class HeadMenu extends Component{
                     </Col>
                     <Col span={3}>
                         <div className="user-info">
-                            <img src='public/img/default.jpg' alt='暂无图片'></img>
+                            <Link to='/login'><img src='public/img/default.jpg' alt='暂无图片'></img></Link>
                         </div>
                         
                     </Col>

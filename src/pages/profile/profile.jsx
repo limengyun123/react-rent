@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import {Switch, Route, Redirect} from 'react-router-dom'
 import CheckProfile from './checkProfile.jsx'
 import EditProfile from './editProfile.jsx'
@@ -27,4 +26,4 @@ class Profile extends Component{
     }
 }
 
-export default connect()(Profile)
+export default Profile
