@@ -1,12 +1,25 @@
 {
-    "userInfo":{
-        "accountName": "Limy",
-		"actualName": "王物",
-		"password": "111111",
-		"IDNumber": "430412372847328917",
-		"email": "16437@qq.com",
-		"sex": "男",
-		"mobie": "15686254721",
-		"avatar": "default.jpg"
-    }
+    "userInfo":[
+			{
+				"accountName": "Limy",
+				"actualName": "王物",
+				"password": "111111",
+				"IDNumber": "430412372847328917",
+				"email": "16437@qq.com",
+				"sex": "男",
+				"mobie": "15686254721",
+				"avatar": "avatar1.jpg"
+			},
+			{
+				"accountName": "Mr.Chen",
+				"actualName": "陈深",
+				"password": "999999999",
+				"IDNumber": "385923569385023905",
+				"email": "shen_chen@126.com",
+				"sex": "男",
+				"mobie": "13798273391",
+				"avatar": "avatar2.jpg"
+			}
+
+		]
 }

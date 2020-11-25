@@ -39,7 +39,7 @@ class HeadMenu extends Component{
                     </Col>
                     <Col span={3}>
                         <div className="user-info">
-                            <Link to='/login'><img src='public/img/default.jpg' alt='暂无图片'></img></Link>
+                            <Link to='/login'><img src={'public/img/'+'default.jpg'} alt='暂无图片'></img></Link>
                         </div>
                         
                     </Col>

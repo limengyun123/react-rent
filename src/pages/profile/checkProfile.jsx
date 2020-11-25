@@ -60,14 +60,7 @@ class CheckProfile extends Component{
 		this.initDate();
 	}
 
-	testToOtherPage(){
-		alert("已跳转！")
-	}
 
-	testChangeLogState(){
-		this.setState({hasLogined : !this.state.hasLogined})
-	}
-	
 	componentDidMount(){
 		if(!this.props.userInfo.accountName){
 			this.getUserInfo();
@@ -94,7 +87,7 @@ class CheckProfile extends Component{
 						</Col>
 						<Col span={21} className='profile-container'>
 							<div className='profile-information'>
-								<img src="public/img/default.jpg" alt="暂无图片"></img>
+								<img src={"public/img/"+this.state.avatar} alt="暂无图片"></img>
 								<div className='static-information'>
 									<label>账号：</label>
 									<span>{this.state.accountName}</span>
@@ -130,8 +123,8 @@ class CheckProfile extends Component{
 						title="您未登录，请先登录."
 						extra={
 							<div>
-								<Button type="primary" onClick={()=>this.testToOtherPage()}>
-									去登录
+								<Button type="primary">
+									<Link to='/login/loginIn'>去登录</Link>
 								</Button>
 								<Button type="defalut" >
 									返回

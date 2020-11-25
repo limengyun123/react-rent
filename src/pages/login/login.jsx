@@ -12,7 +12,6 @@ class Login extends Component{
                     <Route path={`${this.props.match.path}/loginIn`} exact component={LoginIn}/>
                     <Route path={`${this.props.match.path}/register`} exact component={Register}/>
                     <Route path={`${this.props.match.path}/forgetPassword`} exact component={ForgetPassword}/>
-                    {/* <Route path={`${this.props.match.path}/register`} component={EditProfile}/> */}
                     <Redirect exact from='/' to='/LoginIn'/>
                     <Route component= {LoginIn}/>
                 </Switch>

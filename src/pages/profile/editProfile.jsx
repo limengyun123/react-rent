@@ -22,9 +22,10 @@ class EditProfile extends Component{
 			mobie: "",
 			avatar: "",
 			hasLogined: false,
-			isPasswordModelVisible: false
+			isPasswordModelVisible: false,
+			isOldPasswordRight: "validating"
 		}
-		this.newPasswordRef = React.createRef();
+		this.changePasswordRef = React.createRef();
 		this.uploadAvatarRef = React.createRef();
 	}
 	
@@ -59,6 +60,7 @@ class EditProfile extends Component{
 		await API.setUser(info);
 	}
 
+
 	submitSuccess=()=>{
 		this.setUserInfo({
 			accountName: this.state.accountName,
@@ -72,21 +74,15 @@ class EditProfile extends Component{
 		});
 	}
 
-	testToOtherPage(){
-		alert("已跳转！")
-	}
 
-	testChangeLogState(){
-		this.setState({hasLogined : !this.state.hasLogined})
-	}
-
-	testReset(){
+	// functions to the form of editing information
+	// ******************** start ********************
+	resetForm(){
 		window.location.reload();
 	}
 
 
 	handleActualNameChange(obj){
-		// console.log(obj);
 		let value = obj.target.value;
 		this.setState({actualName:value})
 	}
@@ -110,19 +106,13 @@ class EditProfile extends Component{
 		let value = obj.target.value;
 		this.setState({email:value})
 	}
+	// ******************** end ********************
+	// functions to the form of editing information
+	
 
-	showPasswordModel=()=>{
-		this.setState({isPasswordModelVisible:true})
-	}
 
-	hidePasswordModel=()=>{
-		this.setState({isPasswordModelVisible:false});
-	}
-
-	editPasswordOK=()=>{
-		this.setState({password:this.newPasswordRef.current.state.value});
-		this.hidePasswordModel();
-	}
+	// functions to the form of changing avatar
+	// ******************** start ********************
 	clickUploadAvatar(){
 		this.uploadAvatarRef.current.click();
 	}
@@ -136,6 +126,38 @@ class EditProfile extends Component{
 		}
 		re.readAsDataURL(file);
 	}
+	// ******************** end ********************
+	// functions to the form of changing avatar
+
+
+	
+	// functions to the form of changing password
+	// ******************** start ********************
+	submitPassword(){
+		if(this.changePasswordRef.current.getFieldValue("oldPassword")===this.state.password){
+			this.setState({isOldPasswordRight:"success"});
+			this.changePasswordRef.current.submit();
+		}
+		else{
+			this.setState({isOldPasswordRight:"error"});
+		}
+	}
+
+	editPasswordOK=()=>{
+		this.setState({password:this.changePasswordRef.current.getFieldValue("newPassword")});
+		this.hidePasswordModel();
+	}
+
+	showPasswordModel=()=>{
+		this.setState({isPasswordModelVisible:true})
+	}
+
+	hidePasswordModel=()=>{
+		this.setState({isPasswordModelVisible:false,isOldPasswordRight:"success"});
+	}
+	// ******************** end ********************
+	// functions to the form of changing password
+
 
 	componentDidMount(){
 		if(!this.props.userInfo.accountName){
@@ -171,7 +193,7 @@ class EditProfile extends Component{
 						>
 							<Form.Item label="头像">
 								<input hidden type="file" onChange={this.showImg.bind(this)} ref={this.uploadAvatarRef}/>
-								<img src={this.state.avatar==="default.jpg"?"public/img/default.jpg":this.state.avatar} alt="暂无图片"></img>
+								<img src={this.state.avatar==="default.jpg"?"public/img/default.jpg":"public/img/"+this.state.avatar} alt="暂无图片"></img>
 								<Button className="default" onClick={()=>this.clickUploadAvatar()}>上传头像</Button>
 							</Form.Item>	
 							<Form.Item label="账号">
@@ -224,7 +246,7 @@ class EditProfile extends Component{
 							<Form.Item 
         						wrapperCol={{ offset: 8, span: 16}}>
 								<Button type="primary" htmlType="submit">提交</Button>
-								<Button htmlType="button" onClick={()=>{this.testReset()}}>重置</Button>
+								<Button htmlType="button" onClick={()=>{this.resetForm()}}>重置</Button>
 							</Form.Item>
 							
 						</Form>
@@ -241,27 +263,26 @@ class EditProfile extends Component{
 								labelCol={{span:6}}
 								wrapperCol={{span:14}}
 								onFinish={this.editPasswordOK}
+								ref={this.changePasswordRef}
+
 							>
 							
 								<Form.Item label="旧密码" name="oldPassword"
+									// hasFeedback
+									validateStatus={this.state.isOldPasswordRight}
+									// help="密码输入错误"
 									rules={[
 										{
 										required: true,
 										message: '请输入旧密码！',
-										},
-										{
-											validator: (_, value) =>{
-												if(value===this.state.password){
-													return Promise.resolve();
-												}
-												return Promise.reject("密码输入错误");
-											}
-										},
+										}
 									]}
+									
 								>
-									<Input.Password/>
+									<Input.Password />
 								</Form.Item>
 								<Form.Item label="新密码" name="newPassword" hasFeedback
+									// validateTrigger="onBlur"
 									rules={[
 										{
 										required: true,
@@ -277,7 +298,7 @@ class EditProfile extends Component{
 										}),
 									]}
 								>
-									<Input.Password ref={this.newPasswordRef}/>
+									<Input.Password />
 								</Form.Item>
 								<Form.Item label="确认密码" name="confirmPassword" hasFeedback
 									rules={[
@@ -300,7 +321,7 @@ class EditProfile extends Component{
 								</Form.Item>
 								<Form.Item 
         						wrapperCol={{ offset: 8, span: 16}}>
-								<Button type="primary" htmlType="submit">提交</Button>
+								<Button type="primary" onClick={()=>{this.submitPassword()}}>提交</Button>
 								<Button htmlType="button" onClick={this.hidePasswordModel}>关闭</Button>
 							</Form.Item>
 							</Form>
@@ -317,8 +338,8 @@ class EditProfile extends Component{
 						title="您未登录，请先登录."
 						extra={
 							<div>
-								<Button type="primary" onClick={()=>this.testToOtherPage()}>
-									去登录
+								<Button type="primary" >
+									<Link to='/login/LoginIn'>去登录</Link>
 								</Button>
 								<Button type="defalut" >
 									返回
