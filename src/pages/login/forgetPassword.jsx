@@ -1,17 +1,73 @@
 import React, { Component } from 'react'
 import LoginHead from '../../component/headLogin.jsx'
-import {Button, Form, Input} from 'antd'
+import {Button, Form, Input,Alert,message} from 'antd'
 import {Link} from 'react-router-dom'
+import { API } from '../../api/api.js';
 
 class ForgetPassword extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            accountName:"",
+            email: "",
+            password:"",
+            hasAlert:false
+        };
+        this.formRef = React.createRef();
+    }
+
+    validateByANandEmail=async(an,email)=>{
+        let result = await API.checkAccountandEmail(an,email);
+        return result;
+    }
+
+    changePassword=async(an,pswd)=>{
+        // TO DO
+    }
+    
+    submitForget=()=>{
+        let an = this.formRef.current.getFieldValue("accountName");
+        let email = this.formRef.current.getFieldValue("email");
+        let pswd = this.formRef.current.getFieldValue("ensureNewPassword");
+        
+        this.validateByANandEmail(an,email).then((result)=>{
+            if(result){
+                console.log("success");
+                this.changePassword(an,pswd);
+                message.success("操作成功",1).then(()=>{
+                    this.props.history.push('/login/loginIn');
+                });
+            }
+            else{
+                console.log("fail");
+                this.setState({
+                    hasAlert:true
+                })
+            }
+        })
+        
+    }
+
+    hideAlert(){
+        this.setState({hasAlert:false});
+    }
+
     render(){
         return (
             <div>
                 <LoginHead destination='/login/forgetPassword' name='忘记密码'/>
                 <div className='login-body'>
-                    <Form
+                    {this.state.hasAlert && <Alert
+                        message="账号或邮箱错误"
+                        type="error"
+                        showIcon
+                        closable
+                    />}
+                    <Form ref={this.formRef}  onClick={()=>{this.hideAlert()}}
                         labelCol={{ span: 5 }}
-                        wrapperCol={{ span: 19}}>
+                        wrapperCol={{ span: 19}}
+                        onFinish={this.submitForget}
+                    >
                         <Form.Item label="账号" name="accountName"
                             rules={[
                                 {
@@ -22,7 +78,7 @@ class ForgetPassword extends Component{
                         >
                             <Input/>
                         </Form.Item>
-                        <Form.Item label="邮箱" name="accountName"
+                        <Form.Item label="邮箱" name="email"
                             rules={[
                                 {
                                     required: true,
@@ -36,7 +92,7 @@ class ForgetPassword extends Component{
                         >
                             <Input/>
                         </Form.Item>
-                        <Form.Item label="新密码" name="password"
+                        <Form.Item label="新密码" name="newPassword"
                             rules={[
                                 {
                                     required: true,
@@ -55,7 +111,7 @@ class ForgetPassword extends Component{
                             <Input.Password  />
                         </Form.Item>
 
-                        <Form.Item label="确认密码" name="ensurePassword"
+                        <Form.Item label="确认密码" name="ensureNewPassword"
                             rules={[
                                 {
                                     required: true,
@@ -63,7 +119,7 @@ class ForgetPassword extends Component{
                                 },
                                 ({ getFieldValue }) => ({
                                     validator(rule, value) {
-                                    if (!value || getFieldValue('password') === value) {
+                                    if (!value || getFieldValue('newPassword') === value) {
                                         return Promise.resolve();
                                     }
                                     return Promise.reject("两次密码输入不一致");
@@ -74,7 +130,8 @@ class ForgetPassword extends Component{
                             <Input.Password  />
                         </Form.Item>
                         <Form.Item>
-                            <Button>忘记密码</Button>
+                            <Button htmlType='submit' >忘记密码</Button>
+                            {/* <Button htmlType='submit' onClick={()=>{this.submitForget()}} >忘记密码</Button> */}
                             <Button><Link to='/login/loginIn'>登录</Link></Button>
                         </Form.Item>
                     </Form>

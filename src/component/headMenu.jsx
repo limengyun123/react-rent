@@ -1,4 +1,6 @@
 import React,{Component} from 'react'
+import {connect} from 'react-redux'
+import PropTypes from 'prop-types'
 import {Menu, Row,Col} from 'antd'
 import {Link, NavLink} from 'react-router-dom'
 import './headMenu.scss'
@@ -8,6 +10,15 @@ class HeadMenu extends Component{
         super();
         this.state = {
             selectedMenu: props.selected,
+            hasLogined: false
+        }
+    }
+
+    componentDidMount(){
+        if(Object.getOwnPropertyNames(this.props.userInfo).length !== 0){
+            this.setState({
+                hasLogined:true,
+            });
         }
     }
 
@@ -38,10 +49,15 @@ class HeadMenu extends Component{
                         </Menu>
                     </Col>
                     <Col span={3}>
+                        {this.state.hasLogined ? 
                         <div className="user-info">
-                            <Link to='/login'><img src={'public/img/'+'default.jpg'} alt='暂无图片'></img></Link>
+                            <Link to='/login'><img src={'public/img/'+this.props.userInfo.avatar} alt='暂无图片'></img></Link>
                         </div>
-                        
+                        :
+                        <div>
+                            <span><Link to='/login/loginIn'>登录</Link>&nbsp;/&nbsp;<Link to='/login/register'>注册</Link></span>
+                        </div>
+                        }
                     </Col>
                 </Row>
             </section>
@@ -49,4 +65,17 @@ class HeadMenu extends Component{
     }
 }
 
-export default HeadMenu;
+
+HeadMenu.propTypes = {
+    userInfo: PropTypes.object.isRequired
+}
+
+
+const mapStateToProps = (state) => {
+    return {
+      userInfo: state.userInfo
+    }
+  }
+
+
+export default connect(mapStateToProps,()=>({}))(HeadMenu)

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux'
 import LoginHead from '../../component/headLogin.jsx'
-import {Button, Form, Input,Alert} from 'antd'
+import {Button, Form, Input,Alert,message} from 'antd'
 import {Link} from 'react-router-dom'
 import './login.scss'
 import { API } from '../../api/api.js'
@@ -24,13 +24,16 @@ class LoginIn extends Component{
         return result;
     }
 
-    check(){
+    submitLogin=()=>{
         let an = this.formRef.current.getFieldValue("accountName");
         let psw = this.formRef.current.getFieldValue("password");
         this.validateUser(an,psw).then((result)=>{
             if(result){
                 this.extractAndSaveUser(an);
-                this.props.history.push('/rooms');
+                message.success('登录成功',1).then(()=>{
+                    this.props.history.push('/rooms');
+                })
+                
             }
             else{
                 this.setState({hasErrorState:true});
@@ -63,6 +66,7 @@ class LoginIn extends Component{
                         ref={this.formRef}
                         labelCol={{ span: 5 }}
                         wrapperCol={{ span: 19}}
+                        onFinish={this.submitLogin}
                     >
                         <Form.Item label="账号" name="accountName"
                             rules={[
@@ -87,8 +91,7 @@ class LoginIn extends Component{
                         </Form.Item>
 
                         <Form.Item>
-                            <Button htmlType="submit" onClick={()=>{this.check()}}>登录</Button>
-                            {/* <Button htmlType="submit" onSubmit={this.check()}>登录</Button> */}
+                            <Button htmlType='submit'>登录</Button>
                             <Button><Link to='/login/register'>注册</Link></Button>
                         </Form.Item>
                     </Form>
@@ -99,9 +102,6 @@ class LoginIn extends Component{
     
 }
 
-const mapStateToProps = (state) => {
-    return {}
-  }
 
 const mapDispatchToProps=(dispatch)=>{
     return {
@@ -109,4 +109,4 @@ const mapDispatchToProps=(dispatch)=>{
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(LoginIn)
+export default connect(()=>{return {}},mapDispatchToProps)(LoginIn)

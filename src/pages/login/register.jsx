@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LoginHead from '../../component/headLogin.jsx'
-import {Button, Form, Input,Alert,Radio} from 'antd'
+import {Button, Form, Input,Alert,Radio,message} from 'antd'
 import {Link} from 'react-router-dom'
 import './login.scss'
 import { API } from '../../api/api.js'
@@ -27,29 +27,34 @@ class Register extends Component{
         return result;
     }
 
-    submitRegister(){
+    addUser=async()=>{
+        // TO DO
+    }
+
+    submitRegister=()=>{
         let an = this.registerRef.current.getFieldValue("accountName");
-        if(an){
-            this.isExistedUser(an).then((result)=>{
-                if(result){
-                    this.setState({
-                        accountName:an,
-                        actualName: this.registerRef.current.getFieldValue("actualName"),
-                        mobie:this.registerRef.current.getFieldValue("mobie"),
-                        email:this.registerRef.current.getFieldValue("email"),
-                        sex: this.registerRef.current.getFieldValue("sex"),
-                        password: this.registerRef.current.getFieldValue("password"),
-                    });
-                    console.log(this.state);
+        this.isExistedUser(an).then((result)=>{
+            if(result){
+                this.setState({
+                    accountName:an,
+                    actualName: this.registerRef.current.getFieldValue("actualName"),
+                    mobie:this.registerRef.current.getFieldValue("mobie"),
+                    email:this.registerRef.current.getFieldValue("email"),
+                    sex: this.registerRef.current.getFieldValue("sex"),
+                    password: this.registerRef.current.getFieldValue("password"),
+                });
+                console.log(this.state);
+                this.addUser();
+                message.success("注册成功",1).then(()=>{
                     this.props.history.push('/login/loginIn');
-                }
-                else{
-                    this.setState({
-                        hasAlert:true
-                    })
-                }
-            });
-        }
+                });
+            }
+            else{
+                this.setState({
+                    hasAlert:true
+                });
+            }
+        });
         
     }
 
@@ -77,6 +82,7 @@ class Register extends Component{
                         ref={this.registerRef}
                         labelCol={{ span: 5 }}
                         wrapperCol={{ span: 19}}
+                        onFinish={this.submitRegister}
                     >
                         <Form.Item label="账号" name="accountName"
                             rules={[
@@ -157,7 +163,7 @@ class Register extends Component{
                         </Form.Item>
 
                         <Form.Item>
-                            <Button htmlType="submit" onClick={()=>{this.submitRegister()}}>注册</Button>
+                            <Button htmlType="submit">注册</Button>
                             {/* <Button htmlType="submit" onSubmit={this.check()}>登录</Button> */}
                             <Button><Link to='/login/loginIn'>登录</Link></Button>
                         </Form.Item>

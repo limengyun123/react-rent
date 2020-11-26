@@ -1,0 +1,34 @@
+[
+        {
+            "roomID":1,
+            "roomImage":"room1.jpg",
+            "roomPrice":1380,
+            "roomType":"二室一厅",
+            "roomAddress":"武汉市洪山区关山街道1037号",
+            "roomDescription":"房子向阳，阳光充足"
+        },
+        {
+            "roomID":2,
+            "roomImage":"room2.jpg",
+            "roomPrice":9000,
+            "roomType":"三室二厅",
+            "roomAddress":"苏州",
+            "roomDescription":"园林附近"
+        },
+        {
+            "roomID":3,
+            "roomImage":"room3.jpg",
+            "roomPrice":8000,
+            "roomType":"三室一厅",
+            "roomAddress":"广州市黄埔区222号",
+            "roomDescription":"学区房"
+        },
+        {
+            "roomID":4,
+            "roomImage":"room4.jpg",
+            "roomPrice":10000,
+            "roomType":"一室一厅",
+            "roomAddress":"北京市故宫博物馆",
+            "roomDescription":"地理位置优越，历史氛围浓重"
+        }
+]

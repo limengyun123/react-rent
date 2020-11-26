@@ -20,8 +20,8 @@ const RouteConfig =()=>(
 			<Route path="/upload" component= {upload}/>
 			<Route path="/profile" component= {profile}/>
 			<Route path="/support" component= {support}/>
-			<Redirect exact from='/' to='/login'/>
-			<Route component= {login}/>
+			<Redirect exact from='/' to='/rooms'/>
+			<Route component= {rooms}/>
 		</Switch>
 	</HashRouter>	
 )
