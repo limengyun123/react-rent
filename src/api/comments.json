@@ -1,0 +1,30 @@
+[
+    {
+        "cmtID":1,
+        "cmtAuthor":"Mr.chen",
+        "cmtAvatar":"default.jpg",
+        "cmtContent":"房屋描述与实际符合，且干净舒适。",
+        "cmtTime":"2020-09-24 21:59:39"
+    },
+    {
+        "cmtID":2,
+        "cmtAuthor":"天道勤筹",
+        "cmtAvatar":"default.jpg",
+        "cmtContent":"房子超大，并且真的是住在森林里面，这个价格真的是物超所值。",
+        "cmtTime":"2020-10-23 00:00:01"
+    },
+    {
+        "cmtID":3,
+        "cmtAuthor":"平安是福",
+        "cmtAvatar":"default.jpg",
+        "cmtContent":"这装修看着不怎么样啊，建议房东减一点房租，可能更容易租出去。",
+        "cmtTime":"2020-11-11 11:11:11"
+    },
+    {
+        "cmtID":4,
+        "cmtAuthor":"年轻人，不讲武德",
+        "cmtAvatar":"default.jpg",
+        "cmtContent":"信息不实吧",
+        "cmtTime":"2020-11-27 22:14:09"
+    }
+]

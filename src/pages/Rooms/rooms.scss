@@ -1,9 +1,17 @@
 .rooms-body{
-    img{
-        width: 200px;
-        height: 160px;
+    .room-item{
+        margin: 30px;
+        padding: 10px 20px 20px;
+        border-bottom: solid #dddddd 1px;
+        img{
+            width: 80%;
+            height: 160px;
+        }
     }
-    p{
-        display: inline;
-    }
+    
+}
+
+.pagination{
+    text-align: center;
+    padding: 30px 0;
 }

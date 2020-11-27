@@ -1,0 +1,28 @@
+.room-detail-head{
+    border: 1px solid rgb(235, 237, 240);
+}
+
+.room-detail-body{
+    padding: 20px 50px;
+    .room-detail-info{
+        img{
+            width: 80%;
+            height: 240px;
+        }
+    }
+    
+    .comments{
+        margin-top:30px;
+        h1{
+            border-bottom: solid 1px #dddddd;
+        }
+        img{
+            border: none;
+        }
+        .comments-pagination{
+            margin:30px 0;
+            text-align: center;
+        }
+    }
+}
+

@@ -118,14 +118,72 @@ export var API = {
             throw err;
         }
     },
-    getRoomsInfo:async()=>{
+
+    /**
+     * 加载主页时，获取分页房源信息
+     * 简易版，待完善。。。
+     */
+    getRoomsInfo:async(from,to)=>{
         try{
             let result = await require('./rooms.json');
             if(result.status !==0 ){
-                return result
+                return {
+                    lenRooms: result.length,
+                    rooms: result.slice(from,to)
+                };
             }else{
                 let err = {
                     tip: "获取房屋信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+        }
+        catch(err){
+            throw err;
+        }
+    },
+    /**
+     * 获得某一具体房源信息
+     * 简易版，待完善。。。
+     */
+    getRoomDetail:async(roomID)=>{
+        try{
+            let result = await require('./rooms.json');
+            if(result.status !==0 ){
+                for(let room of result){
+                    if(room.roomID===roomID){
+                        return room;
+                    }
+                }
+                return null;
+            }else{
+                let err = {
+                    tip: "获取房屋信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+        }
+        catch(err){
+            throw err;
+        }
+    },
+    /**
+     * 获得评论
+     * 简易版，待完善。。。
+     */
+    getComments:async(from,to)=>{
+        try{
+            let result = await require('./comments.json');
+            if(result.status !==0 ){
+                return {
+                    lenComments: result.length,
+                    comments: result.slice(from,to)
+                };
+            }else{
+                let err = {
+                    tip: "获取评论失败",
                     response: result,
                 }
                 throw err;
