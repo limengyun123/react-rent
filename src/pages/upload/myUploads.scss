@@ -1,4 +1,4 @@
-.favorite-body{
+.myUpload-body{
     .room-item{
         margin: 30px;
         padding: 10px 20px 20px;
@@ -8,10 +8,16 @@
             height: 160px;
         }
     }
+
+    .fixed-button{
+        position: absolute;
+        top: 120px;
+        right:40px;
+    }
     
+    .pagination{
+        text-align: center;
+        padding: 30px 0;
+    }
 }
 
-.pagination{
-    text-align: center;
-    padding: 30px 0;
-}

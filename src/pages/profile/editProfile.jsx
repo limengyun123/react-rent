@@ -7,6 +7,7 @@ import {saveUserInfo} from '../../redux/actions/action.js'
 import './profile.scss'
 import { Button,Col,Result, Row,Menu,Form, Input,Radio,Modal } from 'antd'
 import { Link } from 'react-router-dom'
+import {AVATAR_PATH} from '../../../config/path.js'
 
 
 class EditProfile extends Component{
@@ -193,7 +194,7 @@ class EditProfile extends Component{
 						>
 							<Form.Item label="头像">
 								<input hidden type="file" onChange={this.showImg.bind(this)} ref={this.uploadAvatarRef}/>
-								<img src={this.state.avatar==="default.jpg"?"public/img/default.jpg":"public/img/"+this.state.avatar} alt="暂无图片"></img>
+								<img src={AVATAR_PATH+(this.state.avatar==="default.jpg"?"default.jpg":this.state.avatar)} alt="暂无图片"></img>
 								<Button className="default" onClick={()=>this.clickUploadAvatar()}>上传头像</Button>
 							</Form.Item>	
 							<Form.Item label="账号">

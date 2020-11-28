@@ -5,8 +5,9 @@ import { API } from '../../api/api.js';
 import HeadMenu from '../../component/headMenu.jsx'
 import {Col,Row,Pagination } from  'antd'
 import './rooms.scss'
+import {ROOM_IMAGE_PATH} from '../../../config/path.js'
 
-class rooms extends Component{
+class Rooms extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -46,7 +47,7 @@ class rooms extends Component{
                                     <Row>
                                         <Col span={6}>
                                             <Link to={'/roomDetail/'+room.roomID}>
-                                                <img src={'/public/img/'+room.roomImage} alt='暂无图片'/>
+                                                <img src={ROOM_IMAGE_PATH+room.roomImage} alt='暂无图片'/>
                                             </Link>
                                         </Col>
                                         <Col span={12}>
@@ -65,7 +66,7 @@ class rooms extends Component{
                     
                 </div>
                 <div className="pagination">
-                    <Pagination defaultCurrent={1} 
+                    <Pagination defaultCurrent={1} hideOnSinglePage
                         current={this.state.currentPage} 
                         total={this.state.totalItems} 
                         pageSize={this.state.pageSize}
@@ -78,4 +79,4 @@ class rooms extends Component{
     }
 }
 
-export default connect()(rooms)
+export default connect()(Rooms)

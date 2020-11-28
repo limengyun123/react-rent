@@ -7,6 +7,7 @@ import {saveUserInfo} from '../../redux/actions/action.js'
 import './profile.scss'
 import { Button,Col,Result, Row,Menu } from 'antd'
 import { Link } from 'react-router-dom'
+import {AVATAR_PATH} from '../../../config/path.js'
 
 class CheckProfile extends Component{
 	constructor(props){
@@ -87,7 +88,7 @@ class CheckProfile extends Component{
 						</Col>
 						<Col span={21} className='profile-container'>
 							<div className='profile-information'>
-								<img src={"public/img/"+this.state.avatar} alt="暂无图片"></img>
+								<img src={AVATAR_PATH+this.state.avatar} alt="暂无图片"></img>
 								<div className='static-information'>
 									<label>账号：</label>
 									<span>{this.state.accountName}</span>

@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import { API } from '../../api/api.js';
 import HeadMenu from '../../component/headMenu.jsx'
-import {Col,Row,Pagination, Button,Result } from  'antd'
-import './favorite.scss'
+import {Col,Row,Pagination, Button,Result,Affix } from  'antd'
+import {UploadOutlined } from '@ant-design/icons';
+import './myUploads.scss'
 import {ROOM_IMAGE_PATH} from '../../../config/path.js'
 
-class Favorite extends Component{
+class MyUpload extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -42,9 +43,9 @@ class Favorite extends Component{
     render(){
         return (
             <div>
-                <HeadMenu selected='1' />
+                <HeadMenu selected='2' />
                 { !this.state.server505?
-                <div className='favorite-body'>
+                <div className='myUpload-body'>
                     <div>
                     {
                         this.state.rooms.map(
@@ -70,6 +71,9 @@ class Favorite extends Component{
                         )
                     }
                     </div>
+                    <Affix offsetTop={120}  className='fixed-button'>
+                        <Button><Link to='/upload'><UploadOutlined /></Link></Button>
+                    </Affix>
                     <div className="pagination">
                         <Pagination defaultCurrent={1} hideOnSinglePage
                             current={this.state.currentPage} 
@@ -93,5 +97,5 @@ class Favorite extends Component{
     }
 }
 
-export default connect()(Favorite);
+export default connect()(MyUpload);
 

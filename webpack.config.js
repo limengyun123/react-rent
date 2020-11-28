@@ -31,5 +31,8 @@ module.exports = {
   },
   node:{
     fs: "empty"
+  },
+  externals:{
+    'BMap':'BMap',
   }
 }

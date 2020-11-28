@@ -3,7 +3,7 @@ import { API } from '../../api/api';
 import {Result,Button, Row, Col,PageHeader,Comment,List,Pagination} from 'antd'
 import { Link } from 'react-router-dom';
 import './roomDetail.scss'
-// import moment from 'moment';
+import {ROOM_IMAGE_PATH, AVATAR_PATH} from '../../../config/path.js'
 
 class RoomDetail extends Component{
     constructor(props){
@@ -13,7 +13,7 @@ class RoomDetail extends Component{
             roomInfo:{},
             roomComments:[],
             currentPage: 1,
-            pageSize: 2,
+            pageSize: 20,
             totalItems:0
         }
     }
@@ -59,17 +59,13 @@ class RoomDetail extends Component{
                 {this.state.roomIDValid?
                 <div>
                     <div className='room-detail-head'>
-                        <PageHeader
-                            className="site-page-header"
-                            onBack={this.goBack}
-                            title="返回主页"
-                        />
+                        <Button onClick={this.goBack} >返回</Button>
                     </div>
                     <div className='room-detail-body'>         
                         <Row className="room-detail-info">
                             <Col span={8}>
                                 <p>{this.state.roomInfo.roomAddress}</p>
-                                <img src={'/public/img/'+this.state.roomInfo.roomImage} alt='暂无图片'></img>
+                                <img src={ROOM_IMAGE_PATH+this.state.roomInfo.roomImage} alt='暂无图片'></img>
                             </Col>
                             <Col span={10}>
                                 <h2>房屋价格：{this.state.roomInfo.roomPrice}元/月</h2>
@@ -93,14 +89,14 @@ class RoomDetail extends Component{
                                     <Comment
                                     // actions={item.actions}
                                     author={item.cmtAuthor}
-                                    avatar={'/public/img/'+item.cmtAvatar}
+                                    avatar={AVATAR_PATH+item.cmtAvatar}
                                     content={item.cmtContent}
                                     datetime={item.cmtTime}
                                     />
                                 </li>
                                 )}
                             />
-                            <Pagination defaultCurrent={1} className='comments-pagination'
+                            <Pagination defaultCurrent={1} className='comments-pagination' hideOnSinglePage
                                 current={this.state.currentPage} 
                                 total={this.state.totalItems} 
                                 pageSize={this.state.pageSize}

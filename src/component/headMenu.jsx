@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {Menu, Row,Col} from 'antd'
 import {Link, NavLink} from 'react-router-dom'
 import './headMenu.scss'
+import {AVATAR_PATH} from '../../config/path.js'
 
 class HeadMenu extends Component{
     constructor(props){
@@ -38,7 +39,7 @@ class HeadMenu extends Component{
                                 <NavLink to='/favorite'>收藏</NavLink>
                             </Menu.Item>
                             <Menu.Item key="2">
-                                <NavLink to='/upload'>发布</NavLink>
+                                <NavLink to='/myUploads'>发布</NavLink>
                             </Menu.Item>
                             <Menu.Item key="3">
                                 <NavLink to='/profile'>账户</NavLink>
@@ -51,7 +52,7 @@ class HeadMenu extends Component{
                     <Col span={3}>
                         {this.state.hasLogined ? 
                         <div className="user-info">
-                            <Link to='/login'><img src={'public/img/'+this.props.userInfo.avatar} alt='暂无图片'></img></Link>
+                            <Link to='/login'><img src={AVATAR_PATH+this.props.userInfo.avatar} alt='暂无图片'></img></Link>
                         </div>
                         :
                         <div>

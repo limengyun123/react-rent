@@ -6,6 +6,7 @@ const login = asyncComponent(()=>import("../pages/login/login.jsx"));
 const rooms = asyncComponent(()=>import("../pages/rooms/rooms.jsx"));
 const favorite = asyncComponent(()=>import("../pages/favorite/favorite.jsx"));
 const upload = asyncComponent(()=>import("../pages/upload/upload.jsx"));
+const myUploads = asyncComponent(()=>import("../pages/upload/myUploads.jsx"));
 const profile = asyncComponent(()=>import("../pages/profile/profile.jsx"));
 const support = asyncComponent(()=>import("../pages/support/support.jsx"));
 const roomDetail = asyncComponent(()=>import("../pages/roomDetail/roomDetail.jsx"));
@@ -19,10 +20,11 @@ const RouteConfig =()=>(
 			<Route path="/roomDetail/:roomID" component={roomDetail} />
 			<Route path="/favorite" component= {favorite}/>
 			<Route path="/upload" component= {upload}/>
+			<Route path="/myUploads" component= {myUploads}/>
 			<Route path="/profile" component= {profile}/>
 			<Route path="/support" component= {support}/>
-			<Redirect exact from='/' to='/rooms'/>
-			<Route component= {rooms}/>
+			<Redirect exact from='/' to='/myUploads'/>
+			<Route component= {myUploads}/>
 		</Switch>
 	</HashRouter>	
 )
