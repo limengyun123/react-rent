@@ -3,6 +3,16 @@
 }
 .upload-body{
     padding: 30px 30%;
-    div{
+    .map{
+        height:300px;
+        width:500px;
+        background-color: rebeccapurple;
+        margin-bottom: 27px;
     }
+}
+
+
+// try to hide baidu iframe
+.tangram-suggestion{
+    display: none;
 }

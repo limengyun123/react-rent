@@ -1,23 +1,29 @@
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
-import {Form,Button,Input, Select} from 'antd'
+import {Form,Button,Input, Select,AutoComplete} from 'antd'
 import './upload.scss'
 import BMap from 'BMap'
+import debounce from 'lodash/debounce';
+
+const { TextArea } = Input;
+let map;
 
 class Upload extends Component{
     constructor(props){
         super(props);
         this.state={
-            "roomID":5,
-            "roomImage":"",
-            "roomPrice":"",
-            "roomType":"",
-            "roomAddress":"",
-            "roomDescription":"",
+            roomID:5,
+            roomImage:"",
+            roomPrice:"",
+            roomType:"",
+            roomAddress:"",
+            roomDescription:"",
+            addressOptions:[],
             hasAlert: false,
             alertText:""
         };
         this.uploadRef = React.createRef();
+        this.searchComplete = debounce(this.searchComplete, 500);
     }
 
     goBack=()=>{
@@ -28,18 +34,76 @@ class Upload extends Component{
 
     }
 
-    initialMap=()=>{
-        var map = new BMap.Map("address"); // 创建Map实例
-        map.centerAndZoom(new BMap.Point(116.404, 39.915), 11); // 初始化地图,设置中心点坐标和地图级别
-        // map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
-        // map.setCurrentCity("北京"); // 设置地图显示的城市 此项是必须设置的
-        // map.enableScrollWheelZoom();
+    /**
+     * initialize the map of locating, including keyword tips, map zoomIning, map clicked then locating
+     * to be improved
+     */
+    initialMap(){
+        map = new BMap.Map("l-map");
+        map.centerAndZoom("武汉",12);                   // 初始化地图,设置城市和地图级别。
+        map.enableScrollWheelZoom(true);
+
+        map.addEventListener('click', this.mapClick);
+
+        let ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+            {
+                "input" : "suggestId",
+                "location" : map,
+                onSearchComplete: this.searchComplete
+            },
+        );
     }
+
+    /**
+     * handle events of clicking the map, get longitude and latitude,
+     * fill in the input with transfered location, then zoom in the place
+     * @param {*} e 
+     */
+    mapClick=(e)=> {
+        var pt = e.point;
+        var geoc = new BMap.Geocoder();
+        var addComp;
+        geoc.getLocation(pt, (rs)=>{
+            addComp = rs.address;
+            this.uploadRef.current.setFieldsValue({address: addComp});
+            map.clearOverlays();
+            map.centerAndZoom(pt,18);
+            map.addOverlay(new BMap.Marker(pt));
+        });  
+        
+        
+    }
+
+    /**
+     * a high frequency function, need to optimize it with throttle or debounce
+     * @param {*} e 
+     */
+    searchComplete=(e)=> {
+        // console.log(e);
+        let searchResult=[];
+        for(let i=0;i<e.Hr.length;i++){
+            let _value=e.Hr[i];
+            let a=_value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+            searchResult.push({value:a});
+        }
+        this.setState({addressOptions:searchResult});
+    }
+    
+    onSelect = (data) => {
+        map.clearOverlays();
+        map.centerAndZoom(data,18);
+    };
+
 
     componentDidMount(){
         this.initialMap();
     }
-    
+
+    componentWillUnmount(){
+        // 注销监听事件
+        map.removeEventListener('click', this.mapClick);
+    }
+
     render(){
         return (
             <div>
@@ -50,7 +114,7 @@ class Upload extends Component{
                 </div>
                 <div className='upload-body'>
                     <Form name="uploadRoomInfo"
-                        labelCol={{ span: 8 }}
+                        labelCol={{ span: 4 }}
                         wrapperCol={{ span: 16}}
                         ref={this.uploadRef}
                         onFinish={this.submitUploadRoom}
@@ -89,6 +153,7 @@ class Upload extends Component{
                             </Select>
 						</Form.Item>
                         <Form.Item label="地址" name="address"
+                            help={<div id='l-map' className='map'>点我</div>}
                             rules={[
                                 {
                                     required:true,
@@ -96,10 +161,15 @@ class Upload extends Component{
                                 }
                             ]}
                         >
-							<Input />
+							{/* <Input /> */}
+                            <AutoComplete id="suggestId"
+                                options={this.state.addressOptions}
+                                onSelect={this.onSelect}
+                                onSearch={this.onSearch}
+                            />
 						</Form.Item>
                         <Form.Item label="描述">
-							<Input placeholder="请描述一下房屋，让大家对你的房屋留下一个好印象吧！"/>
+							<TextArea placeholder="请描述一下房屋，让大家对你的房屋留下一个好印象吧！"/>
 						</Form.Item>  
                         <Form.Item label="图片" name="image"
                             rules={[
@@ -112,6 +182,9 @@ class Upload extends Component{
                             <input type="file"/>
 							
 						</Form.Item> 
+                        <Form.Item label="测试">
+							<Button >点我</Button>
+						</Form.Item>  
                     </Form>
                 </div>
             </div>
