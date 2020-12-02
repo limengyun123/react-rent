@@ -182,7 +182,7 @@ class UploadRoom extends Component{
                                     message:"请输入房屋月租"
                                 },
                                 {
-                                    pattern: new RegExp(/^\d*[\.]?\d*$/, "g"),
+                                    pattern: new RegExp(/^\d*[\\.]?\d*$/, "g"),
                                     message:"请输入正数"
                                 }
                             ]}
