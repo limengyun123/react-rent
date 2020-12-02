@@ -5,7 +5,7 @@ import asyncComponent from '../utils/asyncComponent.jsx'
 const login = asyncComponent(()=>import("../pages/login/login.jsx"));
 const rooms = asyncComponent(()=>import("../pages/rooms/rooms.jsx"));
 const favorite = asyncComponent(()=>import("../pages/favorite/favorite.jsx"));
-const upload = asyncComponent(()=>import("../pages/upload/upload.jsx"));
+const uploadRoom = asyncComponent(()=>import("../pages/upload/uploadRoom.jsx"));
 const myUploads = asyncComponent(()=>import("../pages/upload/myUploads.jsx"));
 const profile = asyncComponent(()=>import("../pages/profile/profile.jsx"));
 const support = asyncComponent(()=>import("../pages/support/support.jsx"));
@@ -19,7 +19,7 @@ const RouteConfig =()=>(
 			<Route path="/rooms" component={rooms} />
 			<Route path="/roomDetail/:roomID" component={roomDetail} />
 			<Route path="/favorite" component= {favorite}/>
-			<Route path="/upload" component= {upload}/>
+			<Route path="/uploadRoom" component= {uploadRoom}/>
 			<Route path="/myUploads" component= {myUploads}/>
 			<Route path="/profile" component= {profile}/>
 			<Route path="/support" component= {support}/>

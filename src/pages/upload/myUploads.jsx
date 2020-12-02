@@ -72,7 +72,7 @@ class MyUpload extends Component{
                     }
                     </div>
                     <Affix offsetTop={120}  className='fixed-button'>
-                        <Button><Link to='/upload'><UploadOutlined /></Link></Button>
+                        <Button><Link to='/uploadRoom'><UploadOutlined /></Link></Button>
                     </Affix>
                     <div className="pagination">
                         <Pagination defaultCurrent={1} hideOnSinglePage

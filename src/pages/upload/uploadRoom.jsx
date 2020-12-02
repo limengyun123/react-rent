@@ -1,14 +1,17 @@
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
-import {Form,Button,Input, Select,AutoComplete} from 'antd'
-import './upload.scss'
+import {Link} from 'react-router-dom'
+import {Form,Button,Input, Select,AutoComplete,Upload,message} from 'antd'
+import { PlusOutlined } from '@ant-design/icons';
+import './uploadRoom.scss'
 import BMap from 'BMap'
 import debounce from 'lodash/debounce';
+import { API } from '../../api/api';
 
 const { TextArea } = Input;
 let map;
 
-class Upload extends Component{
+class UploadRoom extends Component{
     constructor(props){
         super(props);
         this.state={
@@ -30,10 +33,6 @@ class Upload extends Component{
         console.log(this.props.history)
     }
 
-    submitUploadRoom=()=>{
-
-    }
-
     /**
      * initialize the map of locating, including keyword tips, map zoomIning, map clicked then locating
      * to be improved
@@ -45,7 +44,7 @@ class Upload extends Component{
 
         map.addEventListener('click', this.mapClick);
 
-        let ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        new BMap.Autocomplete(    //建立一个自动完成的对象
             {
                 "input" : "suggestId",
                 "location" : map,
@@ -94,6 +93,62 @@ class Upload extends Component{
         map.centerAndZoom(data,18);
     };
 
+    /**
+     * add restriction on the file
+     * @param {single file(expected to be image) that user upload}} file 
+     */
+    beforeUpload=(file)=>{
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          message.error('只能上传 JPG/PNG 文件!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        if (!isLt2M) {
+          message.error('图片大小必须小于 2MB!');
+        }
+        if(isJpgOrPng && isLt2M){
+            this.setState({roomImage:this.state.roomImage.concat(file)});
+            return true;
+        }
+        return false;
+      }
+
+
+    /**
+     * after the form is validated by rules, recheck it in this function
+     */
+    submitUploadRoom=()=>{
+        let newState={};
+        newState.roomPrice = this.uploadRef.current.getFieldValue("price");
+        newState.roomType = this.uploadRef.current.getFieldValue("type");
+        newState.roomAddress = this.uploadRef.current.getFieldValue("address");
+        newState.roomDescription = this.uploadRef.current.getFieldValue("description");
+        this.setState(newState);
+        this.uploadRoomInfo();
+
+    }
+
+    /**
+     * post infomation of the room to backstage
+     */
+    uploadRoomInfo=async()=>{
+        let object = {
+            roomID:this.state.roomID,
+            roomImage:this.state.roomImage,
+            roomPrice:this.state.roomPrice,
+            roomType:this.state.roomType,
+            roomAddress:this.state.roomAddress,
+            roomDescription:this.state.roomDescription,
+        }
+        let result = await API.postRoomInfo(object);
+        if(result){
+            message.success("提交成功");
+            this.props.history.push('/myUploads');
+        }
+        else{
+            message.error('提交失败！');
+        }
+    }
 
     componentDidMount(){
         this.initialMap();
@@ -102,6 +157,7 @@ class Upload extends Component{
     componentWillUnmount(){
         // 注销监听事件
         map.removeEventListener('click', this.mapClick);
+        console.log(this.state);
     }
 
     render(){
@@ -109,7 +165,7 @@ class Upload extends Component{
             <div>
                 <div className='upload-head'>
                     <div className='room-detail-head'>
-                        <Button onClick={this.goBack} >返回</Button>
+                        <Button><Link to='/myUploads'>返回</Link></Button>
                     </div>
                 </div>
                 <div className='upload-body'>
@@ -126,7 +182,7 @@ class Upload extends Component{
                                     message:"请输入房屋月租"
                                 },
                                 {
-                                    pattern:new RegExp('/^([1-9]+(\\.)?[0-9]*)||([0]\\.[0-9]*)$/','g'),
+                                    pattern: new RegExp(/^\d*[\.]?\d*$/, "g"),
                                     message:"请输入正数"
                                 }
                             ]}
@@ -168,7 +224,7 @@ class Upload extends Component{
                                 onSearch={this.onSearch}
                             />
 						</Form.Item>
-                        <Form.Item label="描述">
+                        <Form.Item label="描述" name="description">
 							<TextArea placeholder="请描述一下房屋，让大家对你的房屋留下一个好印象吧！"/>
 						</Form.Item>  
                         <Form.Item label="图片" name="image"
@@ -179,11 +235,19 @@ class Upload extends Component{
                                 }
                             ]}
                         >
-                            <input type="file"/>
+                            {/* <input type="file"/> */}
+                            <Upload
+                                listType="picture-card"
+                                beforeUpload={this.beforeUpload}
+                            >
+                                <PlusOutlined /><div style={{ marginTop: 8 }}>上传</div>
+                            </Upload>
 							
 						</Form.Item> 
                         <Form.Item label="测试">
-							<Button >点我</Button>
+							<Button type='primary' htmlType='submit'>提交</Button>
+							<Button onClick={()=>{window.location.reload()}}>重置</Button>
+                            
 						</Form.Item>  
                     </Form>
                 </div>
@@ -192,4 +256,4 @@ class Upload extends Component{
     }
 }
 
-export default connect()(Upload);
+export default connect()(UploadRoom);

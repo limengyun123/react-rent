@@ -192,6 +192,9 @@ export var API = {
         catch(err){
             throw err;
         }
+    },
+    postRoomInfo:async(from,to)=>{
+        return false;
     }
 
 }
