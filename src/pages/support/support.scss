@@ -1,9 +1,65 @@
 .support-body{
     width: 100%;
-    padding: 0 10%;
 
-    .chat-window{
-        height: 400px;
-        background-color: #dddddd;
+    .record-frame{
+        margin:10px 0;
+        height: 350px;
+        border: solid 1px #bbbbbb;
+        border-radius: 10px;
+        padding: 10px;
+        overflow:scroll;
+
+        .content{
+            width: 100%;
+            margin:8px;
+            p{
+                max-width: 80%;
+                padding: 5px 10px;
+                border:solid #eeeeee 1px;
+                border-radius: 10px;
+            }
+        }
+
+        .others-content{
+            float: left;
+            p{
+                float: left;
+            }
+        }
+
+        .my-content{
+            float: right;
+            p{
+                float: right;
+                background-color: rgba(255, 123, 0, 0.822);
+                color: white;
+
+            }
+        }
+
+    }
+
+    .input-frame{
+        .input-choice{
+            padding: 5px 0;
+            span{
+                color: #555555;
+                border:solid #eeeeee 1px;
+                border-radius: 10px;
+                padding: 3px 4px;
+                margin: 0 4px;
+            }
+
+            span:hover{
+                border:#2ebef7 solid 1px;
+            }
+            
+        }
+
+        .support-button{
+            margin: 8px;
+            float: right;
+        }
+        
     }
 }

@@ -1,8 +1,6 @@
-import React from 'react'
+import React,{Component} from 'react'
 import PropTypes from 'prop-types'
-import {Component} from 'react'
 import {connect} from 'react-redux'
-import {API} from '../../api/api'
 import {saveUserInfo} from '../../redux/actions/action.js'
 import './profile.scss'
 import { Button,Col,Result, Row,Menu } from 'antd'
@@ -55,18 +53,9 @@ class CheckProfile extends Component{
 		}
 	}
 
-	getUserInfo = async()=>{
-		let userInfo = await API.getUser();
-		this.props.saveUserInfo(userInfo);
-		this.initDate();
-	}
-
 
 	componentDidMount(){
-		if(!this.props.userInfo.accountName){
-			this.getUserInfo();
-		}
-		else{
+		if(this.props.userInfo && this.props.userInfo.accountName){
 			this.initDate();
 		}
 	}

@@ -1,7 +1,8 @@
 import React,{Component} from 'react'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import {Form,Button,Input, Select,AutoComplete,Upload,message} from 'antd'
+import {Form,Button,Input, Select,AutoComplete,Upload,message,Result} from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import './uploadRoom.scss'
 import BMap from 'BMap'
@@ -22,8 +23,6 @@ class UploadRoom extends Component{
             roomAddress:"",
             roomDescription:"",
             addressOptions:[],
-            hasAlert: false,
-            alertText:""
         };
         this.uploadRef = React.createRef();
         this.searchComplete = debounce(this.searchComplete, 500);
@@ -69,8 +68,6 @@ class UploadRoom extends Component{
             map.centerAndZoom(pt,18);
             map.addOverlay(new BMap.Marker(pt));
         });  
-        
-        
     }
 
     /**
@@ -118,13 +115,19 @@ class UploadRoom extends Component{
      * after the form is validated by rules, recheck it in this function
      */
     submitUploadRoom=()=>{
-        let newState={};
-        newState.roomPrice = this.uploadRef.current.getFieldValue("price");
-        newState.roomType = this.uploadRef.current.getFieldValue("type");
-        newState.roomAddress = this.uploadRef.current.getFieldValue("address");
-        newState.roomDescription = this.uploadRef.current.getFieldValue("description");
-        this.setState(newState);
-        this.uploadRoomInfo();
+        if(this.props.userInfo && this.props.userInfo.accountName){
+            let newState={};
+            newState.roomPrice = this.uploadRef.current.getFieldValue("price");
+            newState.roomType = this.uploadRef.current.getFieldValue("type");
+            newState.roomAddress = this.uploadRef.current.getFieldValue("address");
+            newState.roomDescription = this.uploadRef.current.getFieldValue("description");
+            this.setState(newState);
+            this.uploadRoomInfo();
+        }
+        else{
+            message.error('请先登录');
+        }
+        
 
     }
 
@@ -151,13 +154,13 @@ class UploadRoom extends Component{
     }
 
     componentDidMount(){
-        this.initialMap();
+		this.initialMap();
     }
 
     componentWillUnmount(){
         // 注销监听事件
         map.removeEventListener('click', this.mapClick);
-        console.log(this.state);
+
     }
 
     render(){
@@ -174,7 +177,7 @@ class UploadRoom extends Component{
                         wrapperCol={{ span: 16}}
                         ref={this.uploadRef}
                         onFinish={this.submitUploadRoom}
-					>
+                    >
                         <Form.Item label="房屋租金" name="price"
                             rules={[
                                 {
@@ -188,8 +191,8 @@ class UploadRoom extends Component{
                             ]}
                         
                         >
-							<Input suffix="元/月"/>
-						</Form.Item> 
+                            <Input suffix="元/月"/>
+                        </Form.Item> 
                         <Form.Item label="房屋类型" name="type"
                             rules={[
                                 {
@@ -198,7 +201,7 @@ class UploadRoom extends Component{
                                 }
                             ]}
                         >
-							<Select>
+                            <Select>
                                 <Select.Option value="一室一厅">一室一厅</Select.Option>
                                 <Select.Option value="一室二厅">一室二厅</Select.Option>
                                 <Select.Option value="二室一厅">二室一厅</Select.Option>
@@ -207,7 +210,7 @@ class UploadRoom extends Component{
                                 <Select.Option value="三室二厅">三室二厅</Select.Option>
                                 <Select.Option value="其他">其他</Select.Option>
                             </Select>
-						</Form.Item>
+                        </Form.Item>
                         <Form.Item label="地址" name="address"
                             help={<div id='l-map' className='map'>点我</div>}
                             rules={[
@@ -217,16 +220,15 @@ class UploadRoom extends Component{
                                 }
                             ]}
                         >
-							{/* <Input /> */}
+                            {/* <Input /> */}
                             <AutoComplete id="suggestId"
                                 options={this.state.addressOptions}
                                 onSelect={this.onSelect}
-                                onSearch={this.onSearch}
                             />
-						</Form.Item>
+                        </Form.Item>
                         <Form.Item label="描述" name="description">
-							<TextArea placeholder="请描述一下房屋，让大家对你的房屋留下一个好印象吧！"/>
-						</Form.Item>  
+                            <TextArea placeholder="请描述一下房屋，让大家对你的房屋留下一个好印象吧！"/>
+                        </Form.Item>  
                         <Form.Item label="图片" name="image"
                             rules={[
                                 {
@@ -242,18 +244,36 @@ class UploadRoom extends Component{
                             >
                                 <PlusOutlined /><div style={{ marginTop: 8 }}>上传</div>
                             </Upload>
-							
-						</Form.Item> 
-                        <Form.Item label="测试">
-							<Button type='primary' htmlType='submit'>提交</Button>
-							<Button onClick={()=>{window.location.reload()}}>重置</Button>
                             
-						</Form.Item>  
+                        </Form.Item> 
+                        <Form.Item label="测试">
+                            <Button type='primary' htmlType='submit'>提交</Button>
+                            <Button onClick={()=>{window.location.reload()}}>重置</Button>
+                            
+                        </Form.Item>  
                     </Form>
+                </div>
+                <div>
+                    {
+                        this.state.hasLogined?
+                        <p>已登录</p>:
+                        <p>未登录</p>
+                    }
                 </div>
             </div>
         )
     }
 }
 
-export default connect()(UploadRoom);
+UploadRoom.propTypes = {
+    userInfo: PropTypes.object.isRequired
+  }
+  
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.userInfo
+    }
+}
+
+  
+export default connect(mapStateToProps,()=>({}))(UploadRoom);

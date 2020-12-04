@@ -1,6 +1,8 @@
 import React,{Component} from 'react'
 import { API } from '../../api/api';
-import {Result,Button, Row, Col,PageHeader,Comment,List,Pagination} from 'antd'
+import PropTypes from 'prop-types'
+import {connect} from 'react-redux'
+import {Result,Button, Row, Col,Comment,List,Pagination} from 'antd'
 import { Link } from 'react-router-dom';
 import './roomDetail.scss'
 import {ROOM_IMAGE_PATH, AVATAR_PATH} from '../../../config/path.js'
@@ -28,7 +30,8 @@ class RoomDetail extends Component{
             this.setState({
                 roomIDValid:true,
                 roomInfo: result
-            })
+            });
+            this.getPartComments(this.state.currentPage);
         }
         
     }
@@ -37,7 +40,6 @@ class RoomDetail extends Component{
         let from = (currentPage-1)*this.state.pageSize;
         let to = currentPage*this.state.pageSize;
         let result = await API.getComments(from,to);
-        console.log(result);
         this.setState({roomComments:result.comments,totalItems:result.lenComments});
     }
 
@@ -50,7 +52,7 @@ class RoomDetail extends Component{
     componentDidMount(){
         let roomID = this.props.match.params.roomID;
         this.getRoom(parseInt(roomID));
-        this.getPartComments(this.state.currentPage);
+        
     }
 
     render(){
@@ -120,4 +122,15 @@ class RoomDetail extends Component{
     }
 }
 
-export default RoomDetail
+
+RoomDetail.propTypes = {
+    userInfo: PropTypes.object.isRequired
+  }
+  
+const mapStateToProps = (state) => {
+    return {
+        userInfo: state.userInfo
+    }
+}
+
+export default connect(mapStateToProps,()=>({}))(RoomDetail)
