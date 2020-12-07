@@ -26,6 +26,7 @@ class LoginIn extends Component{
 
     submitLogin=()=>{
         let an = this.formRef.current.getFieldValue("accountName");
+        console.log(an);
         let psw = this.formRef.current.getFieldValue("password");
         this.validateUser(an,psw).then((result)=>{
             if(result){

@@ -1,0 +1,34 @@
+ 
+ .admin-head{
+    width: 100%;
+    border-bottom: solid 1px #dddddd;
+    background-color: rgb(1, 35, 70);
+    .head-title{
+        font-size: 1.6rem;
+        padding: 5px 20px 0px 30px;
+        
+        color: #ffffff
+    }
+
+    .toggle-button{
+        top:18px;
+        background-color: inherit;
+        border: none;
+        font-size: 1.5rem;
+    }
+    .user-info{
+        top:26px;
+    }
+
+}
+
+.admin-body{
+    .admin-menu{
+        float: left;
+        // background-color: rgb(1, 35, 70);
+        // height: 600px;
+    }
+    .admin-main-content{
+        float: left;
+    }
+}

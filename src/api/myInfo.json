@@ -21,5 +21,26 @@
 				"avatar": "avatar2.jpg"
 			}
 
+		],
+		"adminInfo":[
+			{
+				"id": "X200574927312",
+				"accountName": "张振华",
+				"password": "zzh74705606.",
+				"email": "zhenhua_zhang@qq.com",
+				"sex": "男",
+				"mobie": "18762301241",
+				"authorization": true
+			},
+			{
+				"id": "X201964192463",
+				"accountName": "李承恩",
+				"password": "lichengen@126.com",
+				"email": "lichengen@126.com",
+				"sex": "男",
+				"mobie": "13083204762",
+				"authorization": false
+			}
+
 		]
 }

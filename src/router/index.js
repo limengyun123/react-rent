@@ -10,6 +10,7 @@ const myUploads = asyncComponent(()=>import("../pages/upload/myUploads.jsx"));
 const profile = asyncComponent(()=>import("../pages/profile/profile.jsx"));
 const support = asyncComponent(()=>import("../pages/support/support.jsx"));
 const roomDetail = asyncComponent(()=>import("../pages/roomDetail/roomDetail.jsx"));
+const admin = asyncComponent(()=>import("../pages/administrator/admin.jsx"));
 
 const RouteConfig =()=>(
 	
@@ -23,8 +24,9 @@ const RouteConfig =()=>(
 			<Route path="/myUploads" component= {myUploads}/>
 			<Route path="/profile" component= {profile}/>
 			<Route path="/support" component= {support}/>
-			<Redirect exact from='/' to='/myUploads'/>
-			<Route component= {myUploads}/>
+			<Route path="/admin" component= {admin}/>
+			<Redirect exact from='/' to='/admin'/>
+			<Route component= {admin}/>
 		</Switch>
 	</HashRouter>	
 )

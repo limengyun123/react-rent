@@ -7,7 +7,7 @@ export var API = {
     getUser:async(an)=>{
         try{
             let result = await require('./myInfo.json').userInfo;
-            if(result.status !==0 && (result instanceof Object)){
+            if(result.status !==0 && (result instanceof Array)){
                 for(let i=0;i<result.length;i++){
                     if(result[i].accountName===an){
                         return result[i]
