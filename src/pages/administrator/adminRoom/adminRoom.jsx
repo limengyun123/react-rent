@@ -18,11 +18,7 @@ class AdminRoom extends Component{
     render(){
         return (
             <div>
-              
-                <PageHeader
-                    className="site-page-header"
-                    breadcrumb={{ routes }}
-                />
+                房屋
             </div>
         )
     }

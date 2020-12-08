@@ -17,12 +17,9 @@ class AdminUser extends Component{
     render(){
         return (
             <div>
-              
-                    <PageHeader
-                        className="site-page-header"
-                        breadcrumb={{ routes }}
-                    />
-                </div>
+                table
+                    
+            </div>
         )
     }
 }
