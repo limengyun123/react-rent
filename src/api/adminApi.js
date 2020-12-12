@@ -4,11 +4,14 @@ export var API = {
      * 获取所有用户信息
      * 简易版，待完善。。。
      */
-    getUser:async(an)=>{
+    getUser:async(from,to)=>{
         try{
             let result = await require('./myInfo.json').userInfo;
-            if(result.status !==0 && (result instanceof Array)){
-                return result
+            if(result.status !==0 ){
+                return {
+                    lenUsers: result.length,
+                    users: result.slice(from,to)
+                };
             }else{
                 let err = {
                     tip: "获取用户信息失败",
@@ -21,4 +24,30 @@ export var API = {
             throw err;
         }
     },
+    getSexPercentage:async()=>{
+        try{
+            let result = await require('./myInfo.json').userInfo;
+            if(result.status !==0 && result instanceof Array){
+                let male=0,female=0;
+                for(let item of result){
+                    if(item.sex==="男"){
+                        male++;
+                    }
+                    else{
+                        female++;
+                    }
+                }
+                return {"numFemale":female,"numMale":male};
+            }else{
+                let err = {
+                    tip: "获取男女比例失败",
+                    response: result,
+                }
+                throw err;
+            }
+            
+        }catch(err){
+            throw err;
+        }
+    }
 }

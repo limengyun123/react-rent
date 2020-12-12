@@ -47,6 +47,8 @@
     "babel-loader": "^8.0.5",
     "cross-env": "^5.1.0",
     "css-loader": "^5.0.1",
+    "echarts": "^4.0.4",
+    "echarts-for-react": "^2.0.16",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

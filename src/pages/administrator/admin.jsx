@@ -9,8 +9,9 @@ import {UserOutlined,EyeOutlined,LineChartOutlined,HomeOutlined,SettingOutlined,
     TeamOutlined,MessageOutlined,MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons'
 import './admin.scss'
 
-const adminUser = asyncComponent(()=>import("./adminUser/adminUser.jsx"));
-const adminRoom = asyncComponent(()=>import("./adminRoom/adminRoom.jsx"));
+const adminUserCheck = asyncComponent(()=>import("./adminUser/adminUserCheck.jsx"));
+const adminUserAnalyse = asyncComponent(()=>import("./adminUser/adminUserAnalyse.jsx"));
+const adminRoomWaiting = asyncComponent(()=>import("./adminRoom/adminRoomWaiting.jsx"));
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -19,8 +20,8 @@ class Admin extends Component{
     constructor(props){
         super(props);
         this.state={
-            openMenu: 'zero',
-            selectedMenu: '00',
+            openMenu: '',
+            selectedMenu: '',
             collapsed: false,
             firstDir:"",
             secondDir:"",
@@ -34,36 +35,10 @@ class Admin extends Component{
         });
     }
 
-    componentDidMount(){
-        this.checkAdminValid();
-        this.setState({
-            firstDir: "用户管理",
-            secondDir: "查看用户"
-        });
+    onOpenChange=(keys )=>{
+        console.log(keys);
     }
 
-    componentDidUpdate(){
-        this.checkAdminValid();
-    }
-    componentWillReceiveProps(nextProps) {
-        let path = nextProps.location.pathname;
-        switch(path){
-            case '/admin/adminRoom':
-                this.setState({
-                    firstDir: "房源管理",
-                    secondDir: "等待审核"
-                });
-                break;
-            default:
-                this.setState({
-                    firstDir: "用户管理",
-                    secondDir: "查看用户"
-                });
-            
-        }
-        
-        // console.log("路径3："+nextProps.location.pathname);
-    }
 
     checkAdminValid(){
         // if(Object.getOwnPropertyNames(this.props.userInfo).length !== 0){
@@ -73,6 +48,50 @@ class Admin extends Component{
         // }
     }
 
+    setMenuState(props){
+        let path = props.location.pathname;
+        console.log(path);
+        switch(path){
+            case '/admin/adminUserAnalyse':
+                this.setState({
+                    openMenu: 'zero',
+                    selectedMenu: '01',
+                    firstDir: "用户管理",
+                    secondDir: "数据统计"
+                });
+                break;
+            case '/admin/adminRoomWaiting':
+                this.setState({
+                    openMenu: 'one',
+                    selectedMenu: '10',
+                    firstDir: "房源管理",
+                    secondDir: "等待审核"
+                });
+                break;
+            default:
+                this.setState({
+                    openMenu: 'zero',
+                    selectedMenu: '00',
+                    firstDir: "用户管理",
+                    secondDir: "查看用户"
+                });
+            
+        }
+    }
+    componentWillMount(){
+        this.setMenuState(this.props);
+    }
+
+    componentDidMount(){
+        this.checkAdminValid();
+        this.setMenuState(this.props);
+    }
+
+
+    componentWillReceiveProps(nextProps) {
+        this.setMenuState(nextProps);
+
+    }
 
     render(){
         return (
@@ -80,16 +99,17 @@ class Admin extends Component{
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className="logo" >长租公寓平台</div>
                     <Menu mode="inline" theme="dark" 
+                        inlineCollapsed={this.state.collapsed}
                         defaultOpenKeys={[this.state.openMenu]} 
                         defaultSelectedKeys={[this.state.selectedMenu]}
-                        inlineCollapsed={this.state.collapsed}
+                 
                     >
                         <SubMenu key="zero" title="用户管理" icon={<UserOutlined />}>
-                            <Menu.Item key="00" icon={<EyeOutlined />}><NavLink to='/admin/adminUser'>查看用户</NavLink></Menu.Item>
-                            <Menu.Item key="01" icon={<LineChartOutlined />}>数据统计</Menu.Item>
+                            <Menu.Item key="00" icon={<EyeOutlined />}><NavLink to='/admin/adminUserCheck'>查看用户</NavLink></Menu.Item>
+                            <Menu.Item key="01" icon={<LineChartOutlined />}><NavLink to='/admin/adminUserAnalyse'>数据统计</NavLink></Menu.Item>
                         </SubMenu>
                         <SubMenu key="one" title="房源管理" icon={<HomeOutlined />}>
-                            <Menu.Item key="10" icon={<UndoOutlined />}><NavLink to='/admin/adminRoom'>等待审核</NavLink></Menu.Item>
+                            <Menu.Item key="10" icon={<UndoOutlined />}><NavLink to='/admin/adminRoomWaiting'>等待审核</NavLink></Menu.Item>
                             <Menu.Item key="11" icon={<UploadOutlined />}>已上传</Menu.Item>
                         </SubMenu>
                         <SubMenu key="two" title="评论管理" icon={<MessageOutlined />}>
@@ -137,10 +157,11 @@ class Admin extends Component{
                         }}
                     >
                         <Switch key='o3'>
-                            <Route path={`${this.props.match.path}/adminUser`} exact component={adminUser}/>
-                            <Route path={`${this.props.match.path}/adminRoom`} exact component={adminRoom}/>
-                            <Redirect exact from='/' to='/adminUser'/>
-                            <Route component= {adminUser}/>
+                            <Route path={`${this.props.match.path}/adminUserCheck`} exact component={adminUserCheck}/>
+                            <Route path={`${this.props.match.path}/adminUserAnalyse`} exact component={adminUserAnalyse}/>
+                            <Route path={`${this.props.match.path}/adminRoomWaiting`} exact component={adminRoomWaiting}/>
+                            <Redirect exact from='/' to='/adminUserCheck'/>
+                            <Route component= {adminUserCheck}/>
                         </Switch>
                     </Content>
                 </Layout>
