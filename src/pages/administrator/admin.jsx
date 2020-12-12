@@ -35,11 +35,6 @@ class Admin extends Component{
         });
     }
 
-    onOpenChange=(keys )=>{
-        console.log(keys);
-    }
-
-
     checkAdminValid(){
         // if(Object.getOwnPropertyNames(this.props.userInfo).length !== 0){
         //     this.setState({
@@ -50,7 +45,6 @@ class Admin extends Component{
 
     setMenuState(props){
         let path = props.location.pathname;
-        console.log(path);
         switch(path){
             case '/admin/adminUserAnalyse':
                 this.setState({
@@ -89,6 +83,7 @@ class Admin extends Component{
 
 
     componentWillReceiveProps(nextProps) {
+        // console.log(nextProps);
         this.setMenuState(nextProps);
 
     }

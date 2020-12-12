@@ -49,5 +49,27 @@ export var API = {
         }catch(err){
             throw err;
         }
+    },
+    getUserDetail:async(ac)=>{
+        try{
+            let result = await require('./myInfo.json').userInfo;
+            if(result.status !==0 && result instanceof Array){
+                for(let item of result){
+                    if(item.accountName===ac){
+                        return item;
+                    }
+                }
+                return null;
+            }else{
+                let err = {
+                    tip: "获取用户信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+            
+        }catch(err){
+            throw err;
+        }
     }
 }

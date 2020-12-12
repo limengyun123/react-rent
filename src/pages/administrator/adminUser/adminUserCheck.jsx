@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
-import {Pagination,Table, Space }from 'antd';
+import {Pagination,Table }from 'antd';
+import {Link} from 'react-router-dom'
 import { API } from '../../../api/adminApi';
 import './adminUserCheck.scss'
 
@@ -12,7 +13,8 @@ class AdminUserCheck extends Component{
             users:[],
             currentPage: 1,
             pageSize: 8,
-            totalItems:0
+            totalItems:0,
+            chosenAccountName:""
         }
     }
 
@@ -23,13 +25,22 @@ class AdminUserCheck extends Component{
         this.setState({users:result.users,totalItems:result.lenUsers});
     }
 
-    componentDidMount(){
-        this.getUsers(this.state.currentPage);
-    }
-
+    
     pageChange=(pageNumber)=>{
         this.setState({currentPage:pageNumber});
         this.getUsers(pageNumber);
+    }
+
+
+    handleDetail(key){
+        // console.log(key);
+        // window.open(`pathname/${param1}/${param2}/${param3}`)
+        window.open(`http://localhost:8080/#/adminUserDetail/${key}`);
+    }
+
+    componentDidMount(){
+        console.log(this.props);
+        this.getUsers(this.state.currentPage);
     }
 
 
@@ -38,8 +49,7 @@ class AdminUserCheck extends Component{
             <div>
                 
                 <div>
-                <Table dataSource={this.state.users} pagination={false}>
-                   
+                <Table dataSource={this.state.users} pagination={false} >
                     <Column title="账号" dataIndex="accountName" key="accountName" />
                     <Column title="姓名" dataIndex="actualName" key="actualName" />
                     <Column title="性别" dataIndex="sex" key="sex" />
@@ -49,15 +59,14 @@ class AdminUserCheck extends Component{
                     <Column title="密码" dataIndex="password" key="password" />
                     <Column
                         title="操作"
-                        key="action"
-                        render={(text, record) => (
-                            <Space size="middle">
-                            <a>详情{record.lastName}</a>
-                            <a>删除</a>
-                            </Space>
-                        )}
-                    />
-                </Table>
+                        dataIndex="action"
+                        render={(text, record) =>
+                            this.state.users.length >= 1 ? (
+                                <span onClick={() => this.handleDetail(record.accountName)}>详情</span>
+                                // <Link to={"/adminUserDetail/"+record.accountName}>详情</Link>
+                            ) : null}
+                        />
+                    </Table>
                 </div>
                 
                 <div className="pagination">

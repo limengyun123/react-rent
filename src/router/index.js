@@ -11,6 +11,7 @@ const profile = asyncComponent(()=>import("../pages/profile/profile.jsx"));
 const support = asyncComponent(()=>import("../pages/support/support.jsx"));
 const roomDetail = asyncComponent(()=>import("../pages/roomDetail/roomDetail.jsx"));
 const admin = asyncComponent(()=>import("../pages/administrator/admin.jsx"));
+const adminUserDetail = asyncComponent(()=>import("../pages/administrator/adminUser/adminUserDetail.jsx"));
 
 const RouteConfig =()=>(
 	
@@ -25,6 +26,7 @@ const RouteConfig =()=>(
 			<Route path="/profile" component= {profile}/>
 			<Route path="/support" component= {support}/>
 			<Route path="/admin" component= {admin}/>
+			<Route path="/adminUserDetail/:accountName" component= {adminUserDetail}/>
 			<Redirect exact from='/' to='/admin'/>
 			<Route component= {admin}/>
 		</Switch>
