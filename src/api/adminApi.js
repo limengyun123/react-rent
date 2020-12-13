@@ -113,5 +113,25 @@ export var API = {
         }catch(err){
             throw err;
         }
+    },
+    getAdmin:async()=>{
+        try{
+            let result = await require('./myInfo.json').adminInfo;
+            if(result.status !==0 && result instanceof Array){
+                return {
+                    lenAdmins: result.length,
+                    admins: result
+                };
+            }else{
+                let err = {
+                    tip: "获取管理员信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+            
+        }catch(err){
+            throw err;
+        }
     }
 }

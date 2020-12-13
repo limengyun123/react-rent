@@ -5,9 +5,19 @@
 .room-detail-body{
     padding: 20px 50px;
     .room-detail-info{
-        img{
-            width: 80%;
-            height: 240px;
+        .info-image{
+            img{
+                width: 80%;
+                height: 240px;
+            }
+        }
+
+        .info-owner{
+            text-align: center;
+            img{
+                height: 160px;
+                width: 120px;
+            }
         }
     }
     

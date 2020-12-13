@@ -3,6 +3,7 @@ import { API } from '../../api/api';
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Result,Button, Row, Col,Comment,List,Pagination} from 'antd'
+import {SafetyCertificateOutlined,WarningOutlined} from '@ant-design/icons'
 import { Link } from 'react-router-dom';
 import './roomDetail.scss'
 import {ROOM_IMAGE_PATH, AVATAR_PATH} from '../../../config/path.js'
@@ -13,6 +14,9 @@ class RoomDetail extends Component{
         this.state={
             roomIDValid: false,
             roomInfo:{},
+            ownerAvatar: "",
+            ownerAccountName: "",
+            ownerQualified: false,
             roomComments:[],
             currentPage: 1,
             pageSize: 20,
@@ -31,9 +35,21 @@ class RoomDetail extends Component{
                 roomIDValid:true,
                 roomInfo: result
             });
+            this.getUser(result.owner);
             this.getPartComments(this.state.currentPage);
         }
         
+    }
+
+    getUser=async(ac)=>{
+        let result = await API.getUser(ac);
+        if(result instanceof Object){
+            this.setState({
+                ownerAvatar: result.avatar,
+                ownerAccountName: ac,
+                ownerQualified: true,
+            })
+        }
     }
 
     getPartComments=async(currentPage)=>{
@@ -52,7 +68,6 @@ class RoomDetail extends Component{
     componentDidMount(){
         let roomID = this.props.match.params.roomID;
         this.getRoom(parseInt(roomID));
-        
     }
 
     render(){
@@ -65,18 +80,27 @@ class RoomDetail extends Component{
                     </div>
                     <div className='room-detail-body'>         
                         <Row className="room-detail-info">
-                            <Col span={8}>
+                            <Col span={8} className="info-image">
                                 <p>{this.state.roomInfo.roomAddress}</p>
                                 <img src={ROOM_IMAGE_PATH+this.state.roomInfo.roomImage} alt='暂无图片'></img>
                             </Col>
-                            <Col span={10}>
+                            <Col span={10} className="info-description">
                                 <h2>房屋价格：{this.state.roomInfo.roomPrice}元/月</h2>
                                 <p>房屋类型：{this.state.roomInfo.roomType}</p>
                                 <p>地址：{this.state.roomInfo.roomAddress}</p>
                                 <p>详细描述：{this.state.roomInfo.roomDescription}</p>
                             </Col>
-                            <Col span={4}>
-                                房东信息
+                            <Col span={4} className="info-owner">
+                                <p>房东信息</p>
+                                <img src={AVATAR_PATH+this.state.ownerAvatar} alt='暂无图片'></img>
+                                <h3>{this.state.ownerAccountName}</h3>
+                                <div>
+                                    {this.state.ownerQualified?
+                                    <div><SafetyCertificateOutlined style={{color:"#33CC33"}}/>&nbsp;已认证</div>
+                                    :
+                                    <div><WarningOutlined style={{color:"#FF9900"}}/>&nbsp;未认证</div>
+                                }
+                                </div>
                             </Col>
                         </Row>
                         <div className='comments'>

@@ -105,7 +105,7 @@
 		"adminInfo":[
 			{
 				"id": "X200574927312",
-				"accountName": "张振华",
+				"actualName": "张振华",
 				"password": "zzh74705606.",
 				"email": "zhenhua_zhang@qq.com",
 				"sex": "男",
@@ -114,7 +114,7 @@
 			},
 			{
 				"id": "X201964192463",
-				"accountName": "李承恩",
+				"actualName": "李承恩",
 				"password": "lichengen@126.com",
 				"email": "lichengen@126.com",
 				"sex": "男",

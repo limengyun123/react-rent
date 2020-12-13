@@ -5,7 +5,7 @@ import {Switch, Route, Redirect,Link, NavLink,withRouter} from 'react-router-dom
 import asyncComponent from '../../utils/asyncComponent.jsx'
 import {Menu,Breadcrumb,Layout,} from 'antd'
 import {UserOutlined,EyeOutlined,LineChartOutlined,HomeOutlined,SettingOutlined,UploadOutlined,
-    UserAddOutlined,UndoOutlined,WarningOutlined,MehOutlined,FrownOutlined,ToolOutlined,
+    UserAddOutlined,UndoOutlined,WarningOutlined,MehOutlined,FrownOutlined,PieChartOutlined,
     TeamOutlined,MessageOutlined,MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons'
 import './admin.scss'
 
@@ -13,6 +13,10 @@ const adminUserCheck = asyncComponent(()=>import("./adminUser/adminUserCheck.jsx
 const adminUserAnalyse = asyncComponent(()=>import("./adminUser/adminUserAnalyse.jsx"));
 const adminRoomUploading = asyncComponent(()=>import("./adminRoom/adminRoomUploading.jsx"));
 const adminRoomUploaded = asyncComponent(()=>import("./adminRoom/adminRoomUploaded.jsx"));
+const adminRoomAnalyse = asyncComponent(()=>import("./adminRoom/adminRoomAnalyse.jsx"));
+const administratorCheck = asyncComponent(()=>import("./administrator/administratorCheck.jsx"));
+const administratorAdd = asyncComponent(()=>import("./administrator/administratorAdd.jsx"));
+const administratorSetting = asyncComponent(()=>import("./administrator/administratorSetting.jsx"));
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -64,13 +68,45 @@ class Admin extends Component{
                 });
                 break;
             case '/admin/adminRoomUploaded':
-                    this.setState({
-                        openMenu: 'one',
-                        selectedMenu: '11',
-                        firstDir: "房源管理",
-                        secondDir: "已审核"
-                    });
+                this.setState({
+                    openMenu: 'one',
+                    selectedMenu: '11',
+                    firstDir: "房源管理",
+                    secondDir: "已审核"
+                });
                     break;
+            case '/admin/adminRoomAnalyse':
+                this.setState({
+                    openMenu: 'one',
+                    selectedMenu: '12',
+                    firstDir: "房源管理",
+                    secondDir: "数据统计"
+                });
+                break;
+            case '/admin/administratorCheck':
+                this.setState({
+                    openMenu: 'four',
+                    selectedMenu: '40',
+                    firstDir: "管理员管理",
+                    secondDir: "查看管理员"
+                });
+                    break;
+            case '/admin/administratorAdd':
+                this.setState({
+                    openMenu: 'four',
+                    selectedMenu: '41',
+                    firstDir: "管理员管理",
+                    secondDir: "添加管理员"
+                });
+                break;
+            case '/admin/administratorSetting':
+                this.setState({
+                    openMenu: 'four',
+                    selectedMenu: '42',
+                    firstDir: "管理员管理",
+                    secondDir: "个人中心"
+                });
+                break;
             default:
                 this.setState({
                     openMenu: 'zero',
@@ -92,7 +128,6 @@ class Admin extends Component{
 
 
     componentWillReceiveProps(nextProps) {
-        // console.log(nextProps);
         this.setMenuState(nextProps);
 
     }
@@ -115,6 +150,7 @@ class Admin extends Component{
                         <SubMenu key="one" title="房源管理" icon={<HomeOutlined />}>
                             <Menu.Item key="10" icon={<UndoOutlined />}><NavLink to='/admin/adminRoomUploading'>等待审核</NavLink></Menu.Item>
                             <Menu.Item key="11" icon={<UploadOutlined />}><NavLink to='/admin/adminRoomUploaded'>已审核</NavLink></Menu.Item>
+                            <Menu.Item key="12" icon={<PieChartOutlined />}><NavLink to='/admin/adminRoomAnalyse'>数据统计</NavLink></Menu.Item>
                         </SubMenu>
                         <SubMenu key="two" title="评论管理" icon={<MessageOutlined />}>
                             <Menu.Item key="20" icon={<WarningOutlined />}>评论举报</Menu.Item>
@@ -124,10 +160,9 @@ class Admin extends Component{
                             <Menu.Item key="30" icon={<FrownOutlined />}>投诉房东</Menu.Item>
                         </SubMenu>
                         <SubMenu key="four" title="管理员管理" icon={<TeamOutlined />}>
-                            <Menu.Item key="40" icon={<EyeOutlined />}>查看管理员</Menu.Item>
-                            <Menu.Item key="41" icon={<ToolOutlined />}>权限管理</Menu.Item>
-                            <Menu.Item key="42" icon={<UserAddOutlined />}>添加管理员</Menu.Item>
-                            <Menu.Item key="43" icon={<SettingOutlined />}>个人设置</Menu.Item>
+                            <Menu.Item key="40" icon={<EyeOutlined />}><NavLink to='/admin/administratorCheck'>查看管理员</NavLink></Menu.Item>
+                            <Menu.Item key="41" icon={<UserAddOutlined />}><NavLink to='/admin/administratorAdd'>添加管理员</NavLink></Menu.Item>
+                            <Menu.Item key="42" icon={<SettingOutlined />}><NavLink to='/admin/administratorSetting'>个人设置</NavLink></Menu.Item>
                         </SubMenu>
                     </Menu>
                 </Sider>
@@ -165,6 +200,10 @@ class Admin extends Component{
                             <Route path={`${this.props.match.path}/adminUserAnalyse`} exact component={adminUserAnalyse}/>
                             <Route path={`${this.props.match.path}/adminRoomUploading`} exact component={adminRoomUploading}/>
                             <Route path={`${this.props.match.path}/adminRoomUploaded`} exact component={adminRoomUploaded}/>
+                            <Route path={`${this.props.match.path}/adminRoomAnalyse`} exact component={adminRoomAnalyse}/>
+                            <Route path={`${this.props.match.path}/administratorCheck`} exact component={administratorCheck}/>
+                            <Route path={`${this.props.match.path}/administratorAdd`} exact component={administratorAdd}/>
+                            <Route path={`${this.props.match.path}/administratorSetting`} exact component={administratorSetting}/>
                             <Redirect exact from='/' to='/adminUserCheck'/>
                             <Route component= {adminUserCheck}/>
                         </Switch>
