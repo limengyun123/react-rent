@@ -2,33 +2,49 @@
         {
             "roomID":1,
             "roomImage":"room1.jpg",
+            "owner": "Limy",
             "roomPrice":1380,
             "roomType":"二室一厅",
             "roomAddress":"武汉市洪山区关山街道1037号",
-            "roomDescription":"房子向阳，阳光充足"
+            "roomDescription":"房子向阳，阳光充足",
+            "uploadTime":"2017-03-21",
+            "checkedTime":"2017-04-01",
+            "checkedAdmin":"X200574927312"
         },
         {
             "roomID":2,
             "roomImage":"room2.jpg",
+            "owner": "Limy",
             "roomPrice":9000,
             "roomType":"三室二厅",
             "roomAddress":"苏州",
-            "roomDescription":"园林附近"
+            "roomDescription":"园林附近",
+            "uploadTime":"2018-06-22",
+            "checkedTime":"2018-07-01",
+            "checkedAdmin":"X200574927312"
         },
         {
             "roomID":3,
             "roomImage":"room3.jpg",
+            "owner": "Mr.Chen",
             "roomPrice":8000,
             "roomType":"三室一厅",
             "roomAddress":"广州市黄埔区222号",
-            "roomDescription":"学区房"
+            "roomDescription":"学区房",
+            "uploadTime":"2019-09-23",
+            "checkedTime":"2019-10-01",
+            "checkedAdmin":"X200574927312"
         },
         {
             "roomID":4,
             "roomImage":"room4.jpg",
+            "owner": "Limy",
             "roomPrice":10000,
             "roomType":"一室一厅",
             "roomAddress":"北京市故宫博物馆",
-            "roomDescription":"地理位置优越，历史氛围浓重"
+            "roomDescription":"地理位置优越，历史氛围浓重",
+            "uploadTime":"2020-12-22",
+            "checkedTime":"2021-01-01",
+            "checkedAdmin":"X201964192463"
         }
 ]

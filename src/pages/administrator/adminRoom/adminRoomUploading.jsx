@@ -1,45 +1,46 @@
 import React,{Component} from 'react';
 import {Pagination,Table }from 'antd';
-import {Link} from 'react-router-dom'
 import { API } from '../../../api/adminApi';
 import '../admin.scss'
 
+
 const { Column } = Table;
 
-class AdminUserCheck extends Component{
+class AdminRoomUploading extends Component{
     constructor(props){
         super(props);
         this.state={
-            users:[],
+            rooms:[],
             currentPage: 1,
             pageSize: 8,
             totalItems:0,
+            chosenAccountName:""
         }
     }
 
-    getUsers=async(currentPage)=>{
+    getUploadRooms=async(currentPage)=>{
         let from = (currentPage-1)*this.state.pageSize;
         let to = currentPage*this.state.pageSize;
-        let result = await API.getUser(from,to);
-        this.setState({users:result.users,totalItems:result.lenUsers});
+        let result = await API.getUploadRoom(from,to);
+        this.setState({rooms:result.rooms,totalItems:result.lenRooms});
     }
 
     
     pageChange=(pageNumber)=>{
         this.setState({currentPage:pageNumber});
-        this.getUsers(pageNumber);
+        this.getUploadRooms(pageNumber);
     }
 
 
     handleDetail(key){
         // console.log(key);
         // window.open(`pathname/${param1}/${param2}/${param3}`)
-        window.open(`http://localhost:8080/#/adminUserDetail/${key}`);
+        window.open(`http://localhost:8080/#/adminRoomDetail/${key}`);
     }
 
     componentDidMount(){
-        console.log(this.props);
-        this.getUsers(this.state.currentPage);
+        // console.log(this.props);
+        this.getUploadRooms(this.state.currentPage);
     }
 
 
@@ -48,21 +49,19 @@ class AdminUserCheck extends Component{
             <div>
                 
                 <div>
-                <Table dataSource={this.state.users} pagination={false} >
-                    <Column title="账号" dataIndex="accountName" key="accountName" />
-                    <Column title="姓名" dataIndex="actualName" key="actualName" />
-                    <Column title="性别" dataIndex="sex" key="sex" />
-                    <Column title="邮箱" dataIndex="email" key="email" />
-                    <Column title="身份证" dataIndex="IDNumber" key="IDNumber" />
-                    <Column title="电话号码" dataIndex="mobie" key="mobie" />
-                    <Column title="密码" dataIndex="password" key="password" />
+                <Table dataSource={this.state.rooms} pagination={false} >
+                    <Column title="ID" dataIndex="roomID" key="roomID" />
+                    <Column title="户主" dataIndex="owner" key="owner" />
+                    <Column title="类型" dataIndex="roomType" key="roomType" />
+                    <Column title="价格" dataIndex="roomPrice" key="roomPrice" />
+                    <Column title="地理位置" dataIndex="roomAddress" key="roomAddress" />
+                    <Column title="上传时间" dataIndex="uploadTime" key="uploadTime" />
                     <Column
                         title="操作"
                         dataIndex="action"
                         render={(text, record) =>
-                            this.state.users.length >= 1 ? (
-                                <span onClick={() => this.handleDetail(record.accountName)}>详情</span>
-                                // <Link to={"/adminUserDetail/"+record.accountName}>详情</Link>
+                            this.state.rooms.length >= 1 ? (
+                                <span onClick={() => this.handleDetail(record.roomID)}>审核</span>
                             ) : null}
                         />
                     </Table>
@@ -82,4 +81,4 @@ class AdminUserCheck extends Component{
     }
 }
 
-export default AdminUserCheck
+export default AdminRoomUploading

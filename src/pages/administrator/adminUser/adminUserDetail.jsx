@@ -64,9 +64,6 @@ class AdminUserDetail extends Component{
                         <Descriptions.Item label="电话号码">{this.state.mobie}</Descriptions.Item>
                         <Descriptions.Item label="邮箱">{this.state.email}</Descriptions.Item>
                         <Descriptions.Item label="身份证">{this.state.IDNumber}</Descriptions.Item>
-                        <Descriptions.Item label="状态" span={3}>
-                            <Badge status="processing" text="在线" />
-                        </Descriptions.Item>
                         <Descriptions.Item label="拥有房数">2</Descriptions.Item>
                         <Descriptions.Item label="房屋详情" span={2}>
                             Data disk type: MongoDB
@@ -81,6 +78,13 @@ class AdminUserDetail extends Component{
                             <br />
                             Region: East China 1<br />
                         </Descriptions.Item>
+						<Descriptions.Item label="状态">
+                            <Badge status="processing" text="在线" />
+                        </Descriptions.Item>
+						<Descriptions.Item label="登录次数">203</Descriptions.Item>
+                        <Descriptions.Item label="月活跃度">4.8888</Descriptions.Item>
+                        <Descriptions.Item label="注册时间">2020-01-22</Descriptions.Item>
+						<Descriptions.Item label="认证时间">2020-01-22</Descriptions.Item>
                     </Descriptions>
 				</div>
 				:

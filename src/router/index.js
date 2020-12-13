@@ -12,6 +12,7 @@ const support = asyncComponent(()=>import("../pages/support/support.jsx"));
 const roomDetail = asyncComponent(()=>import("../pages/roomDetail/roomDetail.jsx"));
 const admin = asyncComponent(()=>import("../pages/administrator/admin.jsx"));
 const adminUserDetail = asyncComponent(()=>import("../pages/administrator/adminUser/adminUserDetail.jsx"));
+const adminRoomDetail = asyncComponent(()=>import("../pages/administrator/adminRoom/adminRoomDetail.jsx"));
 
 const RouteConfig =()=>(
 	
@@ -27,6 +28,7 @@ const RouteConfig =()=>(
 			<Route path="/support" component= {support}/>
 			<Route path="/admin" component= {admin}/>
 			<Route path="/adminUserDetail/:accountName" component= {adminUserDetail}/>
+			<Route path="/adminRoomDetail/:roomID" component= {adminRoomDetail}/>
 			<Redirect exact from='/' to='/admin'/>
 			<Route component= {admin}/>
 		</Switch>

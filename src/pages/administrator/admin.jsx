@@ -11,7 +11,8 @@ import './admin.scss'
 
 const adminUserCheck = asyncComponent(()=>import("./adminUser/adminUserCheck.jsx"));
 const adminUserAnalyse = asyncComponent(()=>import("./adminUser/adminUserAnalyse.jsx"));
-const adminRoomWaiting = asyncComponent(()=>import("./adminRoom/adminRoomWaiting.jsx"));
+const adminRoomUploading = asyncComponent(()=>import("./adminRoom/adminRoomUploading.jsx"));
+const adminRoomUploaded = asyncComponent(()=>import("./adminRoom/adminRoomUploaded.jsx"));
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
@@ -54,7 +55,7 @@ class Admin extends Component{
                     secondDir: "数据统计"
                 });
                 break;
-            case '/admin/adminRoomWaiting':
+            case '/admin/adminRoomUploading':
                 this.setState({
                     openMenu: 'one',
                     selectedMenu: '10',
@@ -62,6 +63,14 @@ class Admin extends Component{
                     secondDir: "等待审核"
                 });
                 break;
+            case '/admin/adminRoomUploaded':
+                    this.setState({
+                        openMenu: 'one',
+                        selectedMenu: '11',
+                        firstDir: "房源管理",
+                        secondDir: "已审核"
+                    });
+                    break;
             default:
                 this.setState({
                     openMenu: 'zero',
@@ -104,8 +113,8 @@ class Admin extends Component{
                             <Menu.Item key="01" icon={<LineChartOutlined />}><NavLink to='/admin/adminUserAnalyse'>数据统计</NavLink></Menu.Item>
                         </SubMenu>
                         <SubMenu key="one" title="房源管理" icon={<HomeOutlined />}>
-                            <Menu.Item key="10" icon={<UndoOutlined />}><NavLink to='/admin/adminRoomWaiting'>等待审核</NavLink></Menu.Item>
-                            <Menu.Item key="11" icon={<UploadOutlined />}>已上传</Menu.Item>
+                            <Menu.Item key="10" icon={<UndoOutlined />}><NavLink to='/admin/adminRoomUploading'>等待审核</NavLink></Menu.Item>
+                            <Menu.Item key="11" icon={<UploadOutlined />}><NavLink to='/admin/adminRoomUploaded'>已审核</NavLink></Menu.Item>
                         </SubMenu>
                         <SubMenu key="two" title="评论管理" icon={<MessageOutlined />}>
                             <Menu.Item key="20" icon={<WarningOutlined />}>评论举报</Menu.Item>
@@ -154,7 +163,8 @@ class Admin extends Component{
                         <Switch key='o3'>
                             <Route path={`${this.props.match.path}/adminUserCheck`} exact component={adminUserCheck}/>
                             <Route path={`${this.props.match.path}/adminUserAnalyse`} exact component={adminUserAnalyse}/>
-                            <Route path={`${this.props.match.path}/adminRoomWaiting`} exact component={adminRoomWaiting}/>
+                            <Route path={`${this.props.match.path}/adminRoomUploading`} exact component={adminRoomUploading}/>
+                            <Route path={`${this.props.match.path}/adminRoomUploaded`} exact component={adminRoomUploaded}/>
                             <Redirect exact from='/' to='/adminUserCheck'/>
                             <Route component= {adminUserCheck}/>
                         </Switch>

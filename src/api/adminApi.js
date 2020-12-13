@@ -71,5 +71,47 @@ export var API = {
         }catch(err){
             throw err;
         }
+    },
+    getUploadRoom:async(from,to)=>{
+        try{
+            let result = await require('./rooms.json');
+            if(result.status !==0 && result instanceof Array ){
+                return {
+                    lenRooms: result.length,
+                    rooms: result.slice(from,to)
+                };
+            }else{
+                let err = {
+                    tip: "获取房屋信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+            
+        }catch(err){
+            throw err;
+        }
+    },
+    getRoomDetail:async(rID)=>{
+        try{
+            let result = await require('./rooms.json');
+            if(result.status !==0 && result instanceof Array){
+                for(let item of result){
+                    if(item.roomID===rID){
+                        return item;
+                    }
+                }
+                return null;
+            }else{
+                let err = {
+                    tip: "获取房屋信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+            
+        }catch(err){
+            throw err;
+        }
     }
 }
