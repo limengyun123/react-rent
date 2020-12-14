@@ -16,8 +16,8 @@ class AdministratorCheck extends Component{
         }
     }
 
-    getAdmins=async(currentPage)=>{
-        let result = await API.getAdmin();
+    getAdminsInfo=async(currentPage)=>{
+        let result = await API.getAdmins();
         console.log("limengyun",result);
         this.setState({admins:result.admins,totalItems:result.lenAdmins});
     }
@@ -30,7 +30,7 @@ class AdministratorCheck extends Component{
 
 
     componentDidMount(){
-        this.getAdmins();
+        this.getAdminsInfo();
     }
 
 

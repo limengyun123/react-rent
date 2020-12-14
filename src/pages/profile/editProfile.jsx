@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 import {API} from '../../api/api'
 import {saveUserInfo} from '../../redux/actions/action.js'
 import './profile.scss'
-import { Button,Col,Result, Row,Menu,Form, Input,Radio,Modal } from 'antd'
+import { Button,Col,Result, Row,Menu,Form, Input,Radio,Modal,message } from 'antd'
 import { Link } from 'react-router-dom'
 import {AVATAR_PATH} from '../../../config/path.js'
 
@@ -73,15 +73,12 @@ class EditProfile extends Component{
 			mobie: this.state.mobie,
 			avatar: this.state.avatar,
 		});
+		message.warning("抱歉，此功能未实现",1);
 	}
 
 
 	// functions to the form of editing information
 	// ******************** start ********************
-	resetForm(){
-		window.location.reload();
-	}
-
 
 	handleActualNameChange(obj){
 		let value = obj.target.value;
@@ -134,19 +131,18 @@ class EditProfile extends Component{
 	
 	// functions to the form of changing password
 	// ******************** start ********************
-	submitPassword(){
+	submitPassword=()=>{
+
 		if(this.changePasswordRef.current.getFieldValue("oldPassword")===this.state.password){
 			this.setState({isOldPasswordRight:"success"});
-			this.changePasswordRef.current.submit();
+			// this.changePasswordRef.current.submit();
+			this.setState({password:this.changePasswordRef.current.getFieldValue("newPassword")});
+			this.hidePasswordModel();
 		}
 		else{
 			this.setState({isOldPasswordRight:"error"});
+			message.error("密码错误",1);
 		}
-	}
-
-	editPasswordOK=()=>{
-		this.setState({password:this.changePasswordRef.current.getFieldValue("newPassword")});
-		this.hidePasswordModel();
 	}
 
 	showPasswordModel=()=>{
@@ -190,7 +186,7 @@ class EditProfile extends Component{
 							// scrollToFirstError={true}
 							labelCol={{ span: 8 }}
         					wrapperCol={{ span: 6}}
-							onFinish={this.submitSuccess()}
+							onFinish={this.submitSuccess}
 						>
 							<Form.Item label="头像">
 								<input hidden type="file" onChange={this.showImg.bind(this)} ref={this.uploadAvatarRef}/>
@@ -247,7 +243,7 @@ class EditProfile extends Component{
 							<Form.Item 
         						wrapperCol={{ offset: 8, span: 16}}>
 								<Button type="primary" htmlType="submit">提交</Button>
-								<Button htmlType="button" onClick={()=>{this.resetForm()}}>重置</Button>
+								<Button htmlType="button" onClick={()=>(window.location.reload())}>重置</Button>
 							</Form.Item>
 							
 						</Form>
@@ -263,7 +259,7 @@ class EditProfile extends Component{
 							<Form name="editUserPassword"
 								labelCol={{span:6}}
 								wrapperCol={{span:14}}
-								onFinish={this.editPasswordOK}
+								onFinish={this.submitPassword}
 								ref={this.changePasswordRef}
 
 							>
@@ -322,7 +318,7 @@ class EditProfile extends Component{
 								</Form.Item>
 								<Form.Item 
         						wrapperCol={{ offset: 8, span: 16}}>
-								<Button type="primary" onClick={()=>{this.submitPassword()}}>提交</Button>
+								<Button type="primary" htmlType="submit">提交</Button>
 								<Button htmlType="button" onClick={this.hidePasswordModel}>关闭</Button>
 							</Form.Item>
 							</Form>

@@ -114,7 +114,7 @@ export var API = {
             throw err;
         }
     },
-    getAdmin:async()=>{
+    getAdmins:async()=>{
         try{
             let result = await require('./myInfo.json').adminInfo;
             if(result.status !==0 && result instanceof Array){
@@ -122,6 +122,50 @@ export var API = {
                     lenAdmins: result.length,
                     admins: result
                 };
+            }else{
+                let err = {
+                    tip: "获取管理员信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+            
+        }catch(err){
+            throw err;
+        }
+    },
+    findAdmin:async(id)=>{
+        try{
+            let result = await require('./myInfo.json').adminInfo;
+            if(result.status !==0 && (result instanceof Object)){
+                for(let i=0;i<result.length;i++){
+                    if(result[i].id===id){
+                        return false;
+                    }
+                }
+                return true;
+            }else{
+                let err = {
+                    tip: "获取管理员信息失败",
+                    response: result,
+                }
+                throw err;
+            }
+        }
+        catch(err){
+            throw err;
+        }      
+    },
+    getAdmin:async(id)=>{
+        try{
+            let result = await require('./myInfo.json').adminInfo;
+            if(result.status !==0 && (result instanceof Array)){
+                for(let i=0;i<result.length;i++){
+                    if(result[i].id===id){
+                        return result[i]
+                    }
+                }
+                return []
             }else{
                 let err = {
                     tip: "获取管理员信息失败",
