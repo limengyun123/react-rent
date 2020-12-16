@@ -4,7 +4,8 @@ import LoginHead from '../../component/headLogin.jsx'
 import {Button, Form, Input,Alert,message} from 'antd'
 import {Link} from 'react-router-dom'
 import './login.scss'
-import { API } from '../../api/api.js'
+import { API,ADMIN_VALIDATED,USER_VALIDATED } from '../../api/api.js'
+import {API as adminAPI} from '../../api/adminApi.js'
 import { saveUserInfo } from '../../redux/actions/action.js'
 
 
@@ -26,15 +27,20 @@ class LoginIn extends Component{
 
     submitLogin=()=>{
         let an = this.formRef.current.getFieldValue("accountName");
-        console.log(an);
         let psw = this.formRef.current.getFieldValue("password");
         this.validateUser(an,psw).then((result)=>{
-            if(result){
+            if(result===USER_VALIDATED){
                 this.extractAndSaveUser(an);
                 message.success('登录成功',1).then(()=>{
                     this.props.history.push('/rooms');
                 })
                 
+            }
+            else if(result===ADMIN_VALIDATED){
+                this.extractAndSaveAdmin(an);
+                message.success('登录成功',1).then(()=>{
+                    this.props.history.push('/admin');
+                })
             }
             else{
                 this.setState({hasErrorState:true});
@@ -44,6 +50,11 @@ class LoginIn extends Component{
 
     extractAndSaveUser=async(an)=>{
         let result = await API.getUser(an);
+        this.props.saveUserInfo(result);
+    }
+
+    extractAndSaveAdmin=async(an)=>{
+        let result = await adminAPI.getAdmin(an);
         this.props.saveUserInfo(result);
     }
 

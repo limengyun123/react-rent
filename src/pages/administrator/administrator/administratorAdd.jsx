@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import {Button, Form, Input,Alert,Radio,message} from 'antd'
+import {connect} from 'react-redux'
+import {Button, Form, Input,Alert,Radio,message,Result} from 'antd'
 import { API } from '../../../api/adminApi';
 import './administrator.scss'
 
@@ -62,12 +63,15 @@ class AdministratorAdd extends Component{
     }
 
     componentDidMount(){
-        this.addAdminRef.current.setFieldsValue({"sex":"男"});
+        if(this.props.userInfo.authorization){
+            this.addAdminRef.current.setFieldsValue({"sex":"男"});
+        }
     }
 
     render(){
         return (
             <div>
+                {this.props.userInfo.authorization?
                 <div className='add-body'>
                 {this.state.hasAlert && <Alert
                     message="该人员已注册为管理员"
@@ -176,11 +180,22 @@ class AdministratorAdd extends Component{
                         </Form.Item>
                     </Form>
                 </div>
+                :
+                <Result
+                    status="warning"
+                    title="抱歉，您没有权限添加."
+                />
+                }
             </div>
         )
     }
     
 }
 
+const mapStateToProps = (state)=>{
+    return {
+        userInfo:state.userInfo
+    }
+}
 
-export default AdministratorAdd
+export default connect(mapStateToProps,()=>({}))(AdministratorAdd)

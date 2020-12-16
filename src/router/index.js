@@ -29,8 +29,8 @@ const RouteConfig =()=>(
 			<Route path="/admin" component= {admin}/>
 			<Route path="/adminUserDetail/:accountName" component= {adminUserDetail}/>
 			<Route path="/adminRoomDetail/:roomID" component= {adminRoomDetail}/>
-			<Redirect exact from='/' to='/admin'/>
-			<Route component= {admin}/>
+			<Redirect exact from='/' to='/login'/>
+			<Route component= {login}/>
 		</Switch>
 	</HashRouter>	
 )

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {Switch, Route, Redirect,Link, NavLink,withRouter} from 'react-router-dom'
 import asyncComponent from '../../utils/asyncComponent.jsx'
-import {Menu,Breadcrumb,Layout,} from 'antd'
+import {Menu,Breadcrumb,Layout,Result,Button} from 'antd'
 import {UserOutlined,EyeOutlined,LineChartOutlined,HomeOutlined,SettingOutlined,UploadOutlined,
     UserAddOutlined,UndoOutlined,WarningOutlined,MehOutlined,FrownOutlined,PieChartOutlined,
     TeamOutlined,MessageOutlined,MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons'
@@ -30,7 +30,7 @@ class Admin extends Component{
             collapsed: false,
             firstDir:"",
             secondDir:"",
-            isAdminValid:true
+            isAdminValid:false
         }
     }
 
@@ -41,11 +41,11 @@ class Admin extends Component{
     }
 
     checkAdminValid(){
-        // if(Object.getOwnPropertyNames(this.props.userInfo).length !== 0){
-        //     this.setState({
-        //         hasLogined:true,
-        //     });
-        // }
+        if(Object.getOwnPropertyNames(this.props.userInfo).length !== 0 && this.props.userInfo.id){
+            this.setState({
+                isAdminValid:true,
+            });
+        }
     }
 
     setMenuState(props){
@@ -134,6 +134,9 @@ class Admin extends Component{
 
     render(){
         return (
+        <div>
+            {this.state.isAdminValid?
+            
             <Layout>
                 <Sider trigger={null} collapsible collapsed={this.state.collapsed}>
                     <div className="logo" >长租公寓平台</div>
@@ -172,16 +175,10 @@ class Admin extends Component{
                             {this.state.collapsed ? <MenuUnfoldOutlined / > :< MenuFoldOutlined/>}
                         </span>
                         <div className="user-info">
-                        {this.state.hasLogined ? 
                             <div>
-                                <Link to='/login'>您好！{this.props.userInfo.accountName+(this.props.userInfo.sex==='男'?'先生':'女士')}</Link>
+                                <Link to='/login'>您好！{this.props.userInfo.actualName +(this.props.userInfo.sex==='男'?'先生':'女士')}</Link>
                             </div>
-                            :
-                            <div>
-                                <span><Link to='/login/loginIn'>登录</Link>&nbsp;/&nbsp;<Link to='/login/register'>注册</Link></span>
-                            </div>
-                        }
-                    </div>
+                        </div>
                     </Header>
                     <Breadcrumb separator=">" className="breadcrumb-nav">
                         <Breadcrumb.Item>{this.state.firstDir}</Breadcrumb.Item>
@@ -209,8 +206,23 @@ class Admin extends Component{
                         </Switch>
                     </Content>
                 </Layout>
-        </Layout>
-
+            </Layout>
+        :
+        <Result
+            status="warning"
+            title="您未登录，请先登录."
+            extra={
+                <div>
+                    <Button type="primary">
+                        <Link to='/login/loginIn'>去登录</Link>
+                    </Button>
+                    <Button type="defalut" >
+                        返回
+                    </Button>
+                </div>
+            }
+        />}
+        </div>
         )
     }
 }

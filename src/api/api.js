@@ -1,3 +1,6 @@
+export const ADMIN_VALIDATED = 2;
+export const USER_VALIDATED = 1;
+
 export var API = {
 
     /**
@@ -43,11 +46,18 @@ export var API = {
      */
     validateUserInfo:async(an,psw)=>{
         try{
-            let result = await require('./myInfo.json').userInfo;
+            let result = await require('./myInfo.json');
             if(result.status !==0 && (result instanceof Object)){
-                for(let i=0;i<result.length;i++){
-                    if(result[i].accountName===an && result[i].password===psw){
-                        return true;
+                let userInfo = result.userInfo;
+                for(let i=0;i<userInfo.length;i++){
+                    if(userInfo[i].accountName===an && userInfo[i].password===psw){
+                        return USER_VALIDATED;
+                    }
+                }
+                let adminInfo = result.adminInfo;
+                for(let ad of adminInfo){
+                    if(ad.id===an && ad.password===psw){
+                        return ADMIN_VALIDATED;
                     }
                 }
                 return false;

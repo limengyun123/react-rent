@@ -162,10 +162,10 @@ export var API = {
             if(result.status !==0 && (result instanceof Array)){
                 for(let i=0;i<result.length;i++){
                     if(result[i].id===id){
-                        return result[i]
+                        return result[i];
                     }
                 }
-                return []
+                return [];
             }else{
                 let err = {
                     tip: "获取管理员信息失败",
