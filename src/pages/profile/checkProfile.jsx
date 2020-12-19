@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {saveUserInfo} from '../../redux/actions/action.js'
 import './profile.scss'
-import { Button,Col,Result, Row,Menu,Descriptions } from 'antd'
+import { Col, Row,Menu,Descriptions } from 'antd'
 import { Link } from 'react-router-dom'
 import {AVATAR_PATH} from '../../../config/path.js'
+import NotLogin from '../../component/notLogin.jsx'
 
 class CheckProfile extends Component{
 	constructor(props){
@@ -93,22 +94,7 @@ class CheckProfile extends Component{
 					</Row>
 				</div>
 				:
-				<div>
-					<Result
-						status="warning"
-						title="您未登录，请先登录."
-						extra={
-							<div>
-								<Button type="primary">
-									<Link to='/login/loginIn'>去登录</Link>
-								</Button>
-								<Button type="defalut" >
-									返回
-								</Button>
-							</div>
-						}
-					/>
-				</div>}
+				<NotLogin/>}
 			</div>
 		)
 	}

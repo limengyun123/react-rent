@@ -5,9 +5,10 @@ import {connect} from 'react-redux'
 import {API} from '../../api/api'
 import {saveUserInfo} from '../../redux/actions/action.js'
 import './profile.scss'
-import { Button,Col,Result, Row,Menu,Form, Input,Radio,Modal,message } from 'antd'
+import { Button,Col, Row,Menu,Form, Input,Radio,Modal,message } from 'antd'
 import { Link } from 'react-router-dom'
 import {AVATAR_PATH} from '../../../config/path.js'
+import NotLogin from '../../component/notLogin.jsx'
 
 
 class EditProfile extends Component{
@@ -329,22 +330,7 @@ class EditProfile extends Component{
 					</Row>
 				</div>
 				:
-				<div>
-					<Result
-						status="warning"
-						title="您未登录，请先登录."
-						extra={
-							<div>
-								<Button type="primary" >
-									<Link to='/login/LoginIn'>去登录</Link>
-								</Button>
-								<Button type="defalut" >
-									返回
-								</Button>
-							</div>
-						}
-					/>
-				</div>}
+				<NotLogin/>}
 			</div>
 		)
 	}

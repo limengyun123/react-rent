@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
-import {Form,Button,Input, Select,AutoComplete,Upload,message,Result} from 'antd'
+import {Form,Button,Input, Select,AutoComplete,Upload,message} from 'antd'
 import { PlusOutlined } from '@ant-design/icons';
 import './uploadRoom.scss'
 import BMap from 'BMap'
@@ -246,19 +246,12 @@ class UploadRoom extends Component{
                             </Upload>
                             
                         </Form.Item> 
-                        <Form.Item label="测试">
+                        <Form.Item>
                             <Button type='primary' htmlType='submit'>提交</Button>
                             <Button onClick={()=>{window.location.reload()}}>重置</Button>
                             
                         </Form.Item>  
                     </Form>
-                </div>
-                <div>
-                    {
-                        this.state.hasLogined?
-                        <p>已登录</p>:
-                        <p>未登录</p>
-                    }
                 </div>
             </div>
         )

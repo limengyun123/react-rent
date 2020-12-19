@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import {Link} from 'react-router-dom'
 import { API } from '../../api/api.js';
 import HeadMenu from '../../component/headMenu.jsx'
+import NotLogin from '../../component/notLogin.jsx'
 import {Col,Row,Pagination, Button,Result } from  'antd'
 import './favorite.scss'
 import {ROOM_IMAGE_PATH} from '../../../config/path.js'
@@ -97,20 +98,7 @@ class Favorite extends Component{
                         subTitle="啊偶，服务器未找到此信息"
                         extra={<Link to='/rooms'><Button type="primary">返回主页</Button></Link>}
                     />:
-                    <Result
-						status="warning"
-						title="您未登录，请先登录."
-						extra={
-							<div>
-								<Button type="primary">
-									<Link to='/login/loginIn'>去登录</Link>
-								</Button>
-								<Button type="defalut" >
-									返回
-								</Button>
-							</div>
-						}
-					/>
+                    <NotLogin/>
                     }
                 </div>
                 }

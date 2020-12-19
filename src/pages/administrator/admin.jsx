@@ -3,7 +3,8 @@ import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {Switch, Route, Redirect,Link, NavLink,withRouter} from 'react-router-dom'
 import asyncComponent from '../../utils/asyncComponent.jsx'
-import {Menu,Breadcrumb,Layout,Result,Button} from 'antd'
+import NotLogin from '../../component/notLogin.jsx'
+import {Menu,Breadcrumb,Layout} from 'antd'
 import {UserOutlined,EyeOutlined,LineChartOutlined,HomeOutlined,SettingOutlined,UploadOutlined,
     UserAddOutlined,UndoOutlined,WarningOutlined,MehOutlined,FrownOutlined,PieChartOutlined,
     TeamOutlined,MessageOutlined,MenuUnfoldOutlined,MenuFoldOutlined} from '@ant-design/icons'
@@ -208,20 +209,7 @@ class Admin extends Component{
                 </Layout>
             </Layout>
         :
-        <Result
-            status="warning"
-            title="您未登录，请先登录."
-            extra={
-                <div>
-                    <Button type="primary">
-                        <Link to='/login/loginIn'>去登录</Link>
-                    </Button>
-                    <Button type="defalut" >
-                        返回
-                    </Button>
-                </div>
-            }
-        />}
+        <NotLogin/>}
         </div>
         )
     }
